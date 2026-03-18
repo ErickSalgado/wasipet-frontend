@@ -1,0 +1,132 @@
+<div class="grid grid-cols-12 h-screen w-full">
+    <div class="col-span-9 h-full w-full fondo-login hidden md:block">
+        <img src="/assets/images/logos/Wasipet-Negro-SVG.svg" class="lg:w-[50%] w-full h-full object-contain block mx-auto"
+            alt="Logo-WASIPET" />
+    </div>
+    <div class="col-span-3 flex flex-col justify-center bg-white w-full fondo-login login-sin-fondo">
+        <!-- Evento ngSubmit y enlace del formGroup -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-y-6 px-4 md:px-8">
+            <div class="mb-4 block md:hidden">
+                <img src="/assets/images/logos/Wasipet-Negro-SVG.svg"
+                    class="w-[50%] h-full object-contain block mx-auto" alt="Logo-WASIPET" />
+            </div>
+
+            <div class="flex flex-col flex-nowrap gap-y-4">
+                <h5>¡Hola de nuevo <i class="material-icons align-middle text-lg">pets</i>!</h5>
+                <h2 class="texto-inicio-sesion font-bold text-2xl">Iniciar Sesión</h2>
+            </div>
+
+
+            <div class="flex flex-col flex-nowrap gap-y-4">
+                <!-- Control Usuario -->
+                <div class="relative">
+                    <input type="email" id="txtUsuario" formControlName="usuario"
+                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
+                        [class.border-red-500]="loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched"
+                        [class.border-gray-300]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)"
+                        [class.focus:border-blue-600]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)"
+                        placeholder="  " />
+                    <label for="txtUsuario"
+                        class="absolute text-lg duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+                        [class.text-red-500]="loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched"
+                        [class.text-gray-500]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)"
+                        [class.peer-focus:text-blue-600]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)">Usuario</label>
+
+                    <!-- Manejo de errores de Usuario con @if -->
+                    @if (loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched) {
+                    <div class="text-red-500 text-xs mt-1 absolute -bottom-5 left-1">
+                        @if (loginForm.controls.usuario.hasError('required')) {
+                        <span>El correo es requerido.</span>
+                        } @else if (loginForm.controls.usuario.hasError('email')) {
+                        <span>Debe ser un correo válido.</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <!-- Control Clave (Contraseña) -->
+                <div class="relative mt-2">
+                    <input [type]="showPassword() ? 'text' : 'password'" id="txtClave" formControlName="clave"
+                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
+                        [class.border-red-500]="loginForm.controls.clave.invalid && loginForm.controls.clave.touched"
+                        [class.border-gray-300]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)"
+                        [class.focus:border-blue-600]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)"
+                        placeholder="  " />
+                    <label for="txtClave"
+                        class="absolute text-lg duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+                        [class.text-red-500]="loginForm.controls.clave.invalid && loginForm.controls.clave.touched"
+                        [class.text-gray-500]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)"
+                        [class.peer-focus:text-blue-600]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)">Clave</label>
+
+                    <!-- Botón para alternar visibilidad de contraseña -->
+                    <button type="button" (click)="togglePasswordVisibility()" title="Mostrar contraseña"
+                        class="absolute right-2 top-3 z-20 text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <i class="material-icons text-xl">{{ showPassword() ? 'visibility_off' : 'visibility' }}</i>
+                    </button>
+
+                    <!-- Manejo de errores de Clave con @if -->
+                    @if (loginForm.controls.clave.invalid && loginForm.controls.clave.touched) {
+                    <div class="text-red-500 text-xs mt-1 absolute -bottom-5 left-1">
+                        @if (loginForm.controls.clave.hasError('required')) {
+                        <span>La contraseña es requerida.</span>
+                        } @else if (loginForm.controls.clave.hasError('minlength')) {
+                        <span>Debe tener al menos 6 caracteres.</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between mt-2">
+                    <a href="javascript:void(0);" class="font-semibold text-sm text-blue-600 hover:underline">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex flex-col flex-nowrap gap-y-3 mt-4">
+                <!-- Botón de Envío -->
+                <div class="w-full">
+                    <button type="submit" [disabled]="isLoading()"
+                        class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-75 disabled:cursor-not-allowed transition-colors duration-200">
+                        <div class="flex items-center justify-center">
+                            @if (isLoading()) {
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            <span>Iniciando sesión...</span>
+                            } @else {
+                            <i class="material-icons mr-2">login</i>
+                            <span>Iniciar sesión</span>
+                            }
+                        </div>
+                    </button>
+                </div>
+
+                <div class="flex items-center my-1">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="flex-shrink mx-4 text-gray-500 text-sm">o</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+
+                <!-- Opciones de inicio de sesión adicionales -->
+                <button type="button"
+                    class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none flex justify-center items-center transition-colors">
+                    <img src="/assets/images/svg/google-icon.svg" alt="google" class="w-5 h-5 mr-3" />
+                    <span>Iniciar sesión con Google</span>
+                </button>
+
+                <button type="button"
+                    class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none flex justify-center items-center transition-colors">
+                    <img src="/assets/images/svg/facebook-icon.svg" alt="facebook" class="w-5 h-5 mr-3" />
+                    <span>Iniciar sesión con Facebook</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

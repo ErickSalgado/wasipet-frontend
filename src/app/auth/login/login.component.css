@@ -1,0 +1,63 @@
+.mat-mdc-outlined-button:not(:disabled) {
+    color: #474747 !important;
+}
+
+a {
+    color: #58CCC6;
+}
+
+.fondo-login {
+    background: -webkit-linear-gradient(130deg, #f4e5cd, #dedede, #58ccc6, #bacfc1, #474747);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(130deg, #f4e5cd, #dedede, #58ccc6, #bacfc1, #474747);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    /* background: -webkit-linear-gradient(130deg, #f4e5cd, #dedede, #474747, #58ccc6, #bacfc1); */
+    /* Chrome 10-25, Safari 5.1-6 */
+    /* background: linear-gradient(130deg, #f4e5cd, #dedede, #474747, #58ccc6, #bacfc1); */
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    // background: -webkit-linear-gradient(180deg, #f4e5cd, #474747, #bacfc1, #58ccc6, #dedede);
+    /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(180deg, #f4e5cd, #474747, #bacfc1, #58ccc6, #dedede);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+@media (min-width: 768px) {
+    .login-sin-fondo {
+        background: white;
+        /* O el color de fondo que desees para escritorio */
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* .peer-focus\:fondo-label-login-movil {
+        background: linear-gradient(130deg, #dedede, #58ccc6) !important;
+    } */
+
+    .peer-focus\:-translate-y-4 {
+        background: linear-gradient(130deg, #dedede, #58ccc6) !important;
+    }
+
+    .peer-focus\:fondo-label-login-movil:is(:where(.peer):focus ~ *) {
+        background: linear-gradient(130deg, #dedede, #58ccc6) !important;
+        border: 0 !important;
+    }
+
+    a {
+        color: #474747 !important;
+    }
+}
+
+
+
+button.button-primary-wasipet {
+    background-color: #BACFC1;
+    color: white;
+    border: solid 1px;
+}
+
+.texto-inicio-sesion {
+    font-size: xxx-large;
+}
