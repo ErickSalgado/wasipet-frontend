@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +12,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 export class LoginComponent {
   // Inyección de dependencias moderna (Angular 14+)
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   // Definición del formulario reactivo estrictamente tipado
   loginForm = this.fb.nonNullable.group({
-    usuario: ['', [Validators.required, Validators.email]],
-    clave: ['', [Validators.required, Validators.minLength(6)]]
+    user: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   // State Management usando Signals (Angular 16+)
@@ -45,6 +47,7 @@ export class LoginComponent {
       this.isLoading.set(false);
       // Aquí se implementaría el ruteo o manejo de autenticación exitosa
       console.log('Login completado exitosamente');
+      this.router.navigate(['/workspace-selector']);
     }, 2000);
   }
 }

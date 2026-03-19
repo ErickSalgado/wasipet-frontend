@@ -20,24 +20,24 @@
             <div class="flex flex-col flex-nowrap gap-y-4">
                 <!-- Control Usuario -->
                 <div class="relative">
-                    <input type="email" id="txtUsuario" formControlName="usuario"
+                    <input type="email" id="txtUsuario" formControlName="user"
                         class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
-                        [class.border-red-500]="loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched"
-                        [class.border-gray-300]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)"
-                        [class.focus:border-blue-600]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)"
+                        [class.border-red-500]="loginForm.controls.user.invalid && loginForm.controls.user.touched"
+                        [class.border-gray-300]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)"
+                        [class.focus:border-blue-600]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)"
                         placeholder="  " />
                     <label for="txtUsuario"
                         class="absolute text-lg duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
-                        [class.text-red-500]="loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched"
-                        [class.text-gray-500]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)"
-                        [class.peer-focus:text-blue-600]="!(loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched)">Usuario</label>
+                        [class.text-red-500]="loginForm.controls.user.invalid && loginForm.controls.user.touched"
+                        [class.text-gray-500]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)"
+                        [class.peer-focus:text-blue-600]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)">Usuario</label>
 
                     <!-- Manejo de errores de Usuario con @if -->
-                    @if (loginForm.controls.usuario.invalid && loginForm.controls.usuario.touched) {
+                    @if (loginForm.controls.user.invalid && loginForm.controls.user.touched) {
                     <div class="text-red-500 text-xs mt-1 absolute -bottom-5 left-1">
-                        @if (loginForm.controls.usuario.hasError('required')) {
+                        @if (loginForm.controls.user.hasError('required')) {
                         <span>El correo es requerido.</span>
-                        } @else if (loginForm.controls.usuario.hasError('email')) {
+                        } @else if (loginForm.controls.user.hasError('email')) {
                         <span>Debe ser un correo válido.</span>
                         }
                     </div>
@@ -46,17 +46,17 @@
 
                 <!-- Control Clave (Contraseña) -->
                 <div class="relative mt-2">
-                    <input [type]="showPassword() ? 'text' : 'password'" id="txtClave" formControlName="clave"
+                    <input [type]="showPassword() ? 'text' : 'password'" id="txtClave" formControlName="password"
                         class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
-                        [class.border-red-500]="loginForm.controls.clave.invalid && loginForm.controls.clave.touched"
-                        [class.border-gray-300]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)"
-                        [class.focus:border-blue-600]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)"
+                        [class.border-red-500]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
+                        [class.border-gray-300]="!(loginForm.controls.password.invalid && loginForm.controls.password.touched)"
+                        [class.focus:border-blue-600]="!(loginForm.controls.password.invalid && loginForm.controls.password.touched)"
                         placeholder="  " />
                     <label for="txtClave"
                         class="absolute text-lg duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
-                        [class.text-red-500]="loginForm.controls.clave.invalid && loginForm.controls.clave.touched"
-                        [class.text-gray-500]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)"
-                        [class.peer-focus:text-blue-600]="!(loginForm.controls.clave.invalid && loginForm.controls.clave.touched)">Clave</label>
+                        [class.text-red-500]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
+                        [class.text-gray-500]="!(loginForm.controls.password.invalid && loginForm.controls.password.touched)"
+                        [class.peer-focus:text-blue-600]="!(loginForm.controls.password.invalid && loginForm.controls.password.touched)">Clave</label>
 
                     <!-- Botón para alternar visibilidad de contraseña -->
                     <button type="button" (click)="togglePasswordVisibility()" title="Mostrar contraseña"
@@ -65,11 +65,11 @@
                     </button>
 
                     <!-- Manejo de errores de Clave con @if -->
-                    @if (loginForm.controls.clave.invalid && loginForm.controls.clave.touched) {
+                    @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
                     <div class="text-red-500 text-xs mt-1 absolute -bottom-5 left-1">
-                        @if (loginForm.controls.clave.hasError('required')) {
+                        @if (loginForm.controls.password.hasError('required')) {
                         <span>La contraseña es requerida.</span>
-                        } @else if (loginForm.controls.clave.hasError('minlength')) {
+                        } @else if (loginForm.controls.password.hasError('minlength')) {
                         <span>Debe tener al menos 6 caracteres.</span>
                         }
                     </div>
