@@ -3,12 +3,29 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Paleta Cromática Oficial WasiPet */
+  --wp-champagne: #F4E5CD;
+  --wp-platinum: #DEDEDE;
+  --wp-robin: #58CCC6;
+  --wp-ash: #BACFC1;
+  --wp-space: #474747;
+}
+
 html,
 body {
-    height: 100%;
-    margin: 0;
+  height: 100%;
+  margin: 0;
+  font-family: "Alan Sans", sans-serif !important;
+  font-style: normal;
+  font-size: large;
+  
+  /* Aplicamos la regla de 0 blancos y 0 negros */
+  background-color: var(--wp-platinum);
+  color: var(--wp-space);
+}
 
-    font-family: "Alan Sans", sans-serif !important;
-    font-style: normal;
-    font-size: large;
+button {
+  font-family: inherit;
+  font-size: 1rem;
 }

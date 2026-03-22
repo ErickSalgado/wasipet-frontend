@@ -1,0 +1,21 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = 'http://localhost:3000/auth';
+
+  login(credentials: { email: string; password: string }) {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      tap(res => {
+        // Guardamos el token y los datos del usuario en el navegador
+        localStorage.setItem('wasipet_token', res.access_token);
+        localStorage.setItem('wasipet_user', JSON.stringify(res.user));
+      })
+    );
+  }
+}

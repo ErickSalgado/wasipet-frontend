@@ -1,23 +1,25 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   // Inyección de dependencias moderna (Angular 14+)
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   // Definición del formulario reactivo estrictamente tipado
   loginForm = this.fb.nonNullable.group({
-    user: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   // State Management usando Signals (Angular 16+)
@@ -26,7 +28,7 @@ export class LoginComponent {
 
   // Alternar la visibilidad de la contraseña
   togglePasswordVisibility(): void {
-    this.showPassword.update(value => !value);
+    this.showPassword.update((value) => !value);
   }
 
   // Manejador del envío del formulario
@@ -37,17 +39,21 @@ export class LoginComponent {
       return;
     }
 
-    // Cambiar estado a cargando
-    this.isLoading.set(true);
+    const formValue = this.loginForm.getRawValue();
 
-    // Simulación de una petición HTTP
-    console.log('Formulario válido, enviando datos:', this.loginForm.getRawValue());
-    
-    setTimeout(() => {
-      this.isLoading.set(false);
-      // Aquí se implementaría el ruteo o manejo de autenticación exitosa
-      console.log('Login completado exitosamente');
-      this.router.navigate(['/workspace-selector']);
-    }, 2000);
+    this.authService
+      .login({
+        email: formValue.email,
+        password: formValue.password,
+      })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/workspace-selector']);
+        },
+        error: (error) => {
+          alert('Credenciales Incorrectas. Intenta de nuevo.');
+          console.error(error);
+        },
+      });
   }
 }

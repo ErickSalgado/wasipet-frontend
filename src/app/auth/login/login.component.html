@@ -1,9 +1,9 @@
 <div class="grid grid-cols-12 h-screen w-full">
     <div class="col-span-9 h-full w-full fondo-login hidden md:block">
-        <img src="/assets/images/logos/Wasipet-Negro-SVG.svg" class="lg:w-[50%] w-full h-full object-contain block mx-auto"
-            alt="Logo-WASIPET" />
+        <img src="/assets/images/logos/Wasipet-Negro-SVG.svg"
+            class="lg:w-[50%] w-full h-full object-contain block mx-auto" alt="Logo-WASIPET" />
     </div>
-    <div class="col-span-3 flex flex-col justify-center bg-white w-full fondo-login login-sin-fondo">
+    <div class="col-span-12 md:col-span-3 flex flex-col justify-center bg-white w-full formulario-login">
         <!-- Evento ngSubmit y enlace del formGroup -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-y-6 px-4 md:px-8">
             <div class="mb-4 block md:hidden">
@@ -20,24 +20,24 @@
             <div class="flex flex-col flex-nowrap gap-y-4">
                 <!-- Control Usuario -->
                 <div class="relative">
-                    <input type="email" id="txtUsuario" formControlName="user"
+                    <input type="email" id="txtEmailUser" formControlName="email"
                         class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
-                        [class.border-red-500]="loginForm.controls.user.invalid && loginForm.controls.user.touched"
-                        [class.border-gray-300]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)"
-                        [class.focus:border-blue-600]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)"
+                        [class.border-red-500]="loginForm.controls.email.invalid && loginForm.controls.email.touched"
+                        [class.border-gray-300]="!(loginForm.controls.email.invalid && loginForm.controls.email.touched)"
+                        [class.focus:border-blue-600]="!(loginForm.controls.email.invalid && loginForm.controls.email.touched)"
                         placeholder="  " />
-                    <label for="txtUsuario"
+                    <label for="txtEmailUser"
                         class="absolute text-lg duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
-                        [class.text-red-500]="loginForm.controls.user.invalid && loginForm.controls.user.touched"
-                        [class.text-gray-500]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)"
-                        [class.peer-focus:text-blue-600]="!(loginForm.controls.user.invalid && loginForm.controls.user.touched)">Usuario</label>
+                        [class.text-red-500]="loginForm.controls.email.invalid && loginForm.controls.email.touched"
+                        [class.text-gray-500]="!(loginForm.controls.email.invalid && loginForm.controls.email.touched)"
+                        [class.peer-focus:text-blue-600]="!(loginForm.controls.email.invalid && loginForm.controls.email.touched)">Usuario</label>
 
                     <!-- Manejo de errores de Usuario con @if -->
-                    @if (loginForm.controls.user.invalid && loginForm.controls.user.touched) {
+                    @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
                     <div class="text-red-500 text-xs mt-1 absolute -bottom-5 left-1">
-                        @if (loginForm.controls.user.hasError('required')) {
+                        @if (loginForm.controls.email.hasError('required')) {
                         <span>El correo es requerido.</span>
-                        } @else if (loginForm.controls.user.hasError('email')) {
+                        } @else if (loginForm.controls.email.hasError('email')) {
                         <span>Debe ser un correo válido.</span>
                         }
                     </div>
@@ -46,13 +46,13 @@
 
                 <!-- Control Clave (Contraseña) -->
                 <div class="relative mt-2">
-                    <input [type]="showPassword() ? 'text' : 'password'" id="txtClave" formControlName="password"
+                    <input [type]="showPassword() ? 'text' : 'password'" id="txtPasswordUser" formControlName="password"
                         class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
                         [class.border-red-500]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
                         [class.border-gray-300]="!(loginForm.controls.password.invalid && loginForm.controls.password.touched)"
                         [class.focus:border-blue-600]="!(loginForm.controls.password.invalid && loginForm.controls.password.touched)"
                         placeholder="  " />
-                    <label for="txtClave"
+                    <label for="txtPasswordUser"
                         class="absolute text-lg duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
                         [class.text-red-500]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
                         [class.text-gray-500]="!(loginForm.controls.password.invalid && loginForm.controls.password.touched)"

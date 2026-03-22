@@ -1,1 +1,52 @@
-<p>workspace-selector works!</p>
+<div class="split-layout">
+  
+  <div class="half left-side">
+    <div class="section-header">
+      <h2>Tu Organización</h2>
+      <p>Selecciona el espacio de trabajo</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="pro-card active">
+        <span class="material-icons card-icon">domain</span>
+        <h3>WasiPet Centro</h3>
+        @if (currentUser()) {
+          <span class="badge">Rol: {{ currentUser().role }}</span>
+        }
+      </div>
+      </div>
+  </div>
+
+  <div class="half right-side">
+    <div class="section-header">
+      <h2>Tus Sucursales</h2>
+      <p>¿Dónde vas a trabajar hoy?</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="pro-card" 
+           [class.active]="selectedBranch() === 'Sede Principal'"
+           (click)="selectBranch('Sede Principal')">
+        <span class="material-icons card-icon">storefront</span>
+        <h3>Sede Principal</h3>
+        <p class="card-desc">Quito, Ecuador</p>
+      </div>
+
+      <div class="pro-card" 
+           [class.active]="selectedBranch() === 'Sede Norte'"
+           (click)="selectBranch('Sede Norte')">
+        <span class="material-icons card-icon">storefront</span>
+        <h3>Sede Norte</h3>
+        <p class="card-desc">Próximamente</p>
+      </div>
+      
+      </div>
+
+    <div class="action-footer">
+      <button class="btn-robin" [disabled]="isLoading()" (click)="enterSystem()">
+        {{ isLoading() ? 'Cargando...' : 'Ingresar al Sistema' }}
+      </button>
+    </div>
+  </div>
+
+</div>
