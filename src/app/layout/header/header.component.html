@@ -1,6 +1,6 @@
 <header class="header">
   <div class="header-left">
-    <button class="menu-btn">
+    <button class="menu-btn" (click)="onToggleMenu()">
       <span class="material-icons">menu_open</span>
     </button>
     <h1 class="page-title">Dashboard Principal</h1>
@@ -9,8 +9,10 @@
   <div class="header-right">
     <div class="user-profile">
       <div class="user-info">
-        <span class="user-name">Administrador</span>
-        <span class="user-branch">Sede Principal</span>
+        @if (currentUser()) {
+        <span class="user-name">{{ currentUser().name }}</span>
+        <span class="user-branch">{{ currentUser().role }}</span>
+        }
       </div>
       <div class="avatar">
         <span class="material-icons">account_circle</span>
