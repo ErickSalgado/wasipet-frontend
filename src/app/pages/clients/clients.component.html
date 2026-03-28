@@ -1,0 +1,80 @@
+<div class="page-header">
+    <div class="header-info">
+        <h2>Directorio de Clientes</h2>
+        <p>Gestiona los dueños de las mascotas de tu sucursal</p>
+    </div>
+    <button class="btn-primary" (click)="toggleForm()">
+        <span class="material-icons">{{ showForm() ? 'close' : 'person_add' }}</span>
+        {{ showForm() ? 'Cancelar' : 'Nuevo Cliente' }}
+    </button>
+</div>
+
+@if (showForm()) {
+<div class="form-card">
+    <h3>Registrar Nuevo Dueño</h3>
+    <form [formGroup]="clientForm" (ngSubmit)="saveClient()">
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="txtClilabelme">Nombres *</label>
+                <input type="text" formControlName="firstName" id="txtClientName">
+            </div>
+            <div class="input-group">
+                <label for="txtClientLastName">Apellidos *</label>
+                <input type="text" formControlName="lastName" id="txtClientLastName">
+            </div>
+            <div class="input-group">
+                <label for="txtClintPhone">Teléfono / WhatsApp *</label>
+                <input type="tel" formControlName="phone" placeholder="0987654321" id="txtClintPhone">
+            </div>
+            <div class="input-group">
+                <label for="txtClientEmail">Correo Electrónico</label>
+                <input type="email" formControlName="email" placeholder="correo@ejemplo.com" id="txtClientEmail">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-outline" (click)="toggleForm()">Cancelar</button>
+            <button type="submit" class="btn-primary" [disabled]="clientForm.invalid">Guardar Cliente</button>
+        </div>
+    </form>
+</div>
+}
+
+@if (!showForm()) {
+<div class="table-container">
+    @if (isLoading()) {
+    <div class="loading-state">Cargando clientes...</div>
+    } @else {
+    <table class="wp-table">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Teléfono</th>
+                <th>Correo Electrónico</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (client of clients(); track client.id) {
+            <tr>
+                <td class="fw-bold">{{ client.firstName }} {{ client.lastName }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.email || 'No registrado' }}</td>
+                <td class="actions">
+                    <button class="btn-icon" title="Ver detalles"><span
+                            class="material-icons">visibility</span></button>
+                    <button class="btn-icon edit" title="Editar"><span class="material-icons">edit</span></button>
+                </td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="4" class="empty-state">
+                    <span class="material-icons">sentiment_dissatisfied</span>
+                    <p>Aún no hay clientes registrados en esta sucursal.</p>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>
+}

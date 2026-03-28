@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LayoutService } from '../../core/services/layout.service';
 
 @Component({
@@ -13,4 +13,13 @@ export class SidebarComponent {
 
   layoutService = inject(LayoutService);
 
+  private readonly router = inject(Router);
+
+  logout() {
+
+    localStorage.removeItem('wasipet_token');
+    localStorage.removeItem('wasipet_user');
+
+    this.router.navigate(['/login']);
+  }
 }

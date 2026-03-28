@@ -10,7 +10,11 @@
       <span>Dashboard</span>
     </a>
     
-    <a class="nav-item">
+    <a routerLink="/clients" routerLinkActive="active" class="nav-item">
+      <span class="material-icons">person</span>
+      <span>Clientes</span>
+    </a>
+    <a routerLink="/pets" routerLinkActive="active" class="nav-item">
       <span class="material-icons">cruelty_free</span>
       <span>Mascotas</span>
     </a>
@@ -25,7 +29,7 @@
   </nav>
 
   <div class="sidebar-footer">
-    <button class="logout-btn">
+    <button class="logout-btn" (click)="logout()">
       <span class="material-icons">logout</span>
       <span>Cerrar Sesión</span>
     </button>

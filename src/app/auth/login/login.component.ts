@@ -39,6 +39,8 @@ export class LoginComponent {
       return;
     }
 
+    this.isLoading.set(true);
+
     const formValue = this.loginForm.getRawValue();
 
     this.authService
