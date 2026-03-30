@@ -1,37 +1,51 @@
-<aside class="sidebar" [class.collapsed]="layoutService.isSidebarCollapsed()">
-  <div class="logo-container">
-    <span class="material-icons logo-icon">pets</span>
-    <h2>WasiPet</h2>
+<div class="flex flex-col h-full bg-wp-space text-white py-6 overflow-hidden">
+
+  <div class="flex items-center gap-4 px-6 mb-10 overflow-hidden whitespace-nowrap">
+    <span class="material-icons text-wp-robin text-3xl shrink-0">pets</span>
+    <h1 class="text-2xl font-bold tracking-wide text-white transition-opacity duration-300">WasiPet</h1>
   </div>
 
-  <nav class="nav-menu">
-    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-      <span class="material-icons">dashboard</span>
-      <span>Dashboard</span>
+  <nav class="flex-1 flex flex-col gap-2">
+
+    <a routerLink="/dashboard" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      <span class="material-icons shrink-0">dashboard</span>
+      <span class="transition-opacity duration-300">Dashboard</span>
     </a>
-    
-    <a routerLink="/clients" routerLinkActive="active" class="nav-item">
-      <span class="material-icons">person</span>
-      <span>Clientes</span>
+
+    <a routerLink="/clients" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      <span class="material-icons shrink-0">person</span>
+      <span class="transition-opacity duration-300">Clientes</span>
     </a>
-    <a routerLink="/pets" routerLinkActive="active" class="nav-item">
-      <span class="material-icons">cruelty_free</span>
-      <span>Mascotas</span>
+
+    <a routerLink="/pets" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      <span class="material-icons shrink-0">cruelty_free</span>
+      <span class="transition-opacity duration-300">Mascotas</span>
     </a>
-    <a class="nav-item">
-      <span class="material-icons">calendar_month</span>
-      <span>Reservas</span>
+
+    <a routerLink="/reservations" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      <span class="material-icons shrink-0">calendar_month</span>
+      <span class="transition-opacity duration-300">Reservas</span>
     </a>
-    <a class="nav-item">
-      <span class="material-icons">settings</span>
-      <span>Configuración</span>
+
+    <a routerLink="/settings" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      <span class="material-icons shrink-0">settings</span>
+      <span class="transition-opacity duration-300">Configuración</span>
     </a>
+
   </nav>
 
-  <div class="sidebar-footer">
-    <button class="logout-btn" (click)="logout()">
-      <span class="material-icons">logout</span>
-      <span>Cerrar Sesión</span>
+  <div class="mt-auto pt-4 border-t border-white/10 px-2">
+    <button (click)="logout()"
+      class="flex items-center gap-4 px-4 py-3 w-full rounded-lg text-white opacity-60 hover:opacity-100 hover:text-red-400 hover:bg-red-400/10 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      <span class="material-icons shrink-0">logout</span>
+      <span class="transition-opacity duration-300">Cerrar Sesión</span>
     </button>
   </div>
-</aside>
+
+</div>

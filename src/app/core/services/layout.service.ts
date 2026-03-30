@@ -1,13 +1,14 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LayoutService {
-
-  isSidebarCollapsed = signal<boolean>(false);
+  isCollapsed = false;
 
   toggleSidebar() {
-    this.isSidebarCollapsed.update(value => !value);
+    this.isCollapsed = !this.isCollapsed;
+    // Esto te demostrará que el clic sí llega hasta aquí
+    console.log('¿El menú está colapsado?:', this.isCollapsed); 
   }
 }
