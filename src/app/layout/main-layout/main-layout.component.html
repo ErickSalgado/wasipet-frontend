@@ -1,8 +1,7 @@
 <div class="flex h-screen bg-wp-platinum overflow-hidden">
 
   <aside
-    class="hidden md:flex flex-col h-full bg-wp-space shrink-0 transition-all duration-300 relative overflow-hidden"
-    [style.width]="layoutService.isCollapsed ? '80px' : '256px'">
+    class="flex-col h-full bg-wp-space shrink-0 transition-all duration-300 overflow-hidden {{ layoutService.isCollapsed ? 'w-20' : 'w-64' }}">
     <app-sidebar class="w-full h-full"></app-sidebar>
   </aside>
 

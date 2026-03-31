@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
@@ -13,5 +13,5 @@ import { LayoutService } from '../../core/services/layout.service';
 })
 export class MainLayoutComponent {
   // Lógica global del layout (ej. abrir/cerrar sidebar en móviles) irá aquí
-  layoutService = Inject(LayoutService);
+  layoutService = inject(LayoutService);
 }
