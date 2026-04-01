@@ -11,7 +11,7 @@ export class AuthService {
   private readonly apiUrl = environment.apiUrl || 'http://localhost:3000/auth';
 
   login(credentials: { email: string; password: string }) {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap(res => {
         // Guardamos el token y los datos del usuario en el navegador
         localStorage.setItem('wasipet_token', res.access_token);
