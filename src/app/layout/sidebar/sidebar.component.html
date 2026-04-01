@@ -1,50 +1,77 @@
 <div class="flex flex-col h-full bg-wp-space text-white py-6 overflow-hidden">
 
-  <div class="flex items-center gap-4 px-6 mb-10 overflow-hidden whitespace-nowrap">
+  <div class="flex items-center mb-10 overflow-hidden whitespace-nowrap cursor-pointer" [class.px-6]="!layoutService.isCollapsed"
+    [class.justify-center]="layoutService.isCollapsed" routerLink="/dashboard">
     <span class="material-icons text-wp-robin text-3xl shrink-0">pets</span>
-    <h1 class="text-2xl font-bold tracking-wide text-white transition-opacity duration-300">WasiPet</h1>
+
+    @if (!layoutService.isCollapsed) {
+    <h1 class="text-2xl font-bold tracking-wide text-white ml-4">WasiPet</h1>
+    }
   </div>
 
   <nav class="flex-1 flex flex-col gap-2">
 
-    <a routerLink="/dashboard" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+    <a routerLink="/dashboard" (click)="layoutService.closeOnMobile()"
+      routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
       [routerLinkActiveOptions]="{exact: true}"
-      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      class="flex items-center py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap"
+      [class.px-6]="!layoutService.isCollapsed" [class.justify-center]="layoutService.isCollapsed">
       <span class="material-icons shrink-0">dashboard</span>
-      <span class="transition-opacity duration-300">Dashboard</span>
+      @if (!layoutService.isCollapsed) {
+      <span class="ml-4">Dashboard</span>
+      }
     </a>
 
-    <a routerLink="/clients" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
-      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+    <a routerLink="/clients" (click)="layoutService.closeOnMobile()"
+      routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap"
+      [class.px-6]="!layoutService.isCollapsed" [class.justify-center]="layoutService.isCollapsed">
       <span class="material-icons shrink-0">person</span>
-      <span class="transition-opacity duration-300">Clientes</span>
+      @if (!layoutService.isCollapsed) {
+      <span class="ml-4">Clientes</span>
+      }
     </a>
 
-    <a routerLink="/pets" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
-      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+    <a routerLink="/pets" (click)="layoutService.closeOnMobile()"
+      routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap"
+      [class.px-6]="!layoutService.isCollapsed" [class.justify-center]="layoutService.isCollapsed">
       <span class="material-icons shrink-0">cruelty_free</span>
-      <span class="transition-opacity duration-300">Mascotas</span>
+      @if (!layoutService.isCollapsed) {
+      <span class="ml-4">Mascotas</span>
+      }
     </a>
 
-    <a routerLink="/reservations" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
-      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+    <a routerLink="/reservations" (click)="layoutService.closeOnMobile()"
+      routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap"
+      [class.px-6]="!layoutService.isCollapsed" [class.justify-center]="layoutService.isCollapsed">
       <span class="material-icons shrink-0">calendar_month</span>
-      <span class="transition-opacity duration-300">Reservas</span>
+      @if (!layoutService.isCollapsed) {
+      <span class="ml-4">Reservas</span>
+      }
     </a>
 
-    <a routerLink="/settings" routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
-      class="flex items-center gap-4 px-6 py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+    <a routerLink="/settings" (click)="layoutService.closeOnMobile()"
+      routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
+      class="flex items-center py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap"
+      [class.px-6]="!layoutService.isCollapsed" [class.justify-center]="layoutService.isCollapsed">
       <span class="material-icons shrink-0">settings</span>
-      <span class="transition-opacity duration-300">Configuración</span>
+      @if (!layoutService.isCollapsed) {
+      <span class="ml-4">Configuración</span>
+      }
     </a>
 
   </nav>
 
   <div class="mt-auto pt-4 border-t border-white/10 px-2">
     <button (click)="logout()"
-      class="flex items-center gap-4 px-4 py-3 w-full rounded-lg text-white opacity-60 hover:opacity-100 hover:text-red-400 hover:bg-red-400/10 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap">
+      class="flex items-center py-3 w-full rounded-lg text-white opacity-60 hover:opacity-100 hover:text-red-400 hover:bg-red-400/10 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap"
+      [class.px-4]="!layoutService.isCollapsed" [class.justify-center]="layoutService.isCollapsed">
       <span class="material-icons shrink-0">logout</span>
-      <span class="transition-opacity duration-300">Cerrar Sesión</span>
+      @if (!layoutService.isCollapsed) {
+      <span class="ml-4">Cerrar Sesión</span>
+      }
     </button>
   </div>
 
