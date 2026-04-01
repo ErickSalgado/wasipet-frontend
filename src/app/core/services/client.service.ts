@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
 // Una pequeña interfaz para que TypeScript sepa qué es un Cliente
 export interface Client {
@@ -22,7 +23,7 @@ export interface Client {
 export class ClientService {
   private readonly http = inject(HttpClient);
   // Usa la IP de tu backend si sigues en la red, o localhost
-  private readonly apiUrl = 'http://localhost:3000/clients';
+  private readonly apiUrl = `${environment.apiUrl}/clients`;
 
   getClients(): Observable<Client[]> {
     return this.http.get<Client[]>(this.apiUrl);
