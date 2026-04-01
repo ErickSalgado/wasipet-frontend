@@ -1,0 +1,61 @@
+<div class="bg-wp-champagne rounded-xl p-6 shadow-sm overflow-x-auto">
+    @if (isLoading()) {
+    <div class="py-12 text-center text-wp-space font-bold animate-pulse">Cargando directorio...</div>
+    } @else {
+    <table class="w-full text-left border-collapse min-w-[700px]">
+        <thead>
+            <tr>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10">Nombre Completo</th>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10">Documento</th>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10">Contacto</th>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10 text-right">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (client of clients(); track client.id) {
+            <tr class="border-b border-black/5 hover:bg-wp-robin/10 transition-colors duration-200">
+                <td class="p-4 text-wp-space">
+                    <span class="font-bold">{{ client.firstName }} {{ client.lastName }}</span>
+                    @if (client.notes) {
+                    <span class="material-icons text-xs text-wp-robin ml-2 align-middle"
+                        title="{{ client.notes }}">info</span>
+                    }
+                </td>
+                <td class="p-4 text-wp-space">
+                    <span class="text-xs font-bold uppercase opacity-70">{{ client.documentType }}</span><br>
+                    {{ client.documentId || 'N/A' }}
+                </td>
+                <td class="p-4 text-wp-space">
+                    <div>{{ client.phone }}</div>
+                    <div class="text-xs opacity-70">{{ client.email || 'Sin correo' }}</div>
+                </td>
+                <td class="p-4 flex justify-end gap-2">
+                    <button
+                        class="p-2 text-wp-space opacity-60 hover:opacity-100 hover:bg-black/10 rounded-md transition-all"
+                        title="Ver detalles">
+                        <span class="material-icons text-xl">visibility</span>
+                    </button>
+                    <button (click)="edit.emit(client)"
+                        class="p-2 text-wp-space opacity-60 hover:text-wp-robin hover:bg-wp-robin/10 rounded-md transition-all"
+                        title="Editar">
+                        <span class="material-icons text-xl">edit</span>
+                    </button>
+                    <button (click)="delete.emit(client.id!)"
+                        class="p-2 text-wp-space opacity-60 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all"
+                        title="Eliminar">
+                        <span class="material-icons text-xl">delete</span>
+                    </button>
+                </td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="4" class="py-16 text-center opacity-60">
+                    <span class="material-icons text-5xl mb-4 text-wp-space">sentiment_dissatisfied</span>
+                    <p class="text-wp-space">Aún no hay clientes registrados en esta sucursal.</p>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>

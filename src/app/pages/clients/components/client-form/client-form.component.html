@@ -1,0 +1,66 @@
+<div class="bg-wp-champagne rounded-xl p-4 sm:p-6 mb-8 shadow-sm border-t-4 border-wp-robin transition-all duration-300">
+    <h3 class="text-lg sm:text-xl font-bold text-wp-space mb-4 sm:mb-6">
+        {{ client()?.id ? 'Editar Dueño' : 'Registrar Nuevo Dueño' }}
+    </h3>
+
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
+
+            <div class="flex flex-col">
+                <label for="firstName" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">Nombres *</label>
+                <input id="firstName" type="text" formControlName="firstName" placeholder="Ej: Santiago" class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="lastName" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">Apellidos *</label>
+                <input id="lastName" type="text" formControlName="lastName" placeholder="Ej: Sigcha" class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="documentType" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">Tipo Documento</label>
+                <select id="documentType" formControlName="documentType" class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space appearance-none">
+                    <option value="CEDULA">Cédula</option>
+                    <option value="RUC">RUC</option>
+                    <option value="PASAPORTE">Pasaporte</option>
+                    <option value="OTRO">Otro</option>
+                </select>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="documentId" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">N° Documento</label>
+                <input id="documentId" type="text" formControlName="documentId" placeholder="Ej: 1712345678" class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="phone" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">Teléfono / WhatsApp *</label>
+                <input id="phone" type="tel" formControlName="phone" placeholder="0987654321" class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="email" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">Correo Electrónico</label>
+                <input id="email" type="email" formControlName="email" placeholder="correo@ejemplo.com" class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space">
+            </div>
+
+            <div class="flex flex-col md:col-span-2">
+                <label for="address" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">Dirección Física</label>
+                <textarea id="address" formControlName="address" rows="2" placeholder="Ej: Av. Principal y Secundaria..." class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space resize-none"></textarea>
+            </div>
+
+            <div class="flex flex-col md:col-span-2 lg:col-span-4">
+                <label for="notes" class="text-xs sm:text-sm font-bold text-wp-space opacity-80 mb-1 sm:mb-2">Notas Adicionales</label>
+                <textarea id="notes" formControlName="notes" rows="2" placeholder="Ej: Cliente requiere factura física..." class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wp-robin focus:border-transparent transition-all bg-white text-wp-space resize-y"></textarea>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 mt-4">
+            <button type="button" (click)="closeForm.emit()" class="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-2.5 sm:py-2 border border-gray-400 text-wp-space font-bold rounded-lg hover:bg-black/5 transition-all">
+                <span class="material-icons text-base">close</span>
+                Cancelar
+            </button>
+            <button type="submit" [disabled]="clientForm.invalid" class="w-full sm:w-auto justify-center px-6 py-2.5 sm:py-2 bg-wp-robin text-wp-space font-bold rounded-lg shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                <span class="material-icons text-sm">save</span>
+                {{ client()?.id ? 'Actualizar' : 'Guardar' }}
+            </button>
+        </div>
+    </form>
+</div>

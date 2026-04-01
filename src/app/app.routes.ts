@@ -2,9 +2,6 @@ import { Routes } from '@angular/router';
 import { WorkspaceSelectorComponent } from './auth/workspace-selector/workspace-selector.component';
 import { LoginComponent } from './auth/login/login.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { PetsComponent } from './pages/pets/pets.component';
-import { ClientsComponent } from './pages/clients/clients.component';
 
 export const routes: Routes = [
   {
@@ -26,15 +23,15 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent,
+        loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
       },
       {
         path: 'clients',
-        component: ClientsComponent,
+        loadComponent: () => import('./pages/clients/clients.component').then(m => m.ClientsComponent),
       },
       {
         path: 'pets',
-        component: PetsComponent,
+        loadComponent: () => import('./pages/pets/pets.component').then(m => m.PetsComponent),
       },
     ],
   },

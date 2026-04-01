@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { AlertService } from '../../core/services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly alertService = inject(AlertService);
 
   // Definición del formulario reactivo estrictamente tipado
   loginForm = this.fb.nonNullable.group({
@@ -50,12 +52,13 @@ export class LoginComponent {
       })
       .subscribe({
         next: () => {
+          this.alertService.toast('¡Bienvenido de nuevo!');
           this.router.navigate(['/workspace-selector']);
         },
-        error: (error) => {
-          alert('Credenciales Incorrectas. Intenta de nuevo.');
-          console.error(error);
-        },
+        error: () => {
+          this.alertService.error('Usuario o contraseña incorrectos', 'Fallo de acceso');
+          this.isLoading.set(false);
+        }
       });
   }
 }
