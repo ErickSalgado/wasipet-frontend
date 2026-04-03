@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { ClientService, Client } from '../../core/services/client.service';
+import { ClientService } from '../../core/services/client.service';
 import { AlertService } from '../../core/services/alert.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, switchMap, tap } from 'rxjs';
 import { ClientListComponent } from './components/client-list/client-list.component';
 import { ClientFormComponent } from './components/client-form/client-form.component';
+import { Client } from '../../core/models/client.interface';
 
 @Component({
   selector: 'app-clients',

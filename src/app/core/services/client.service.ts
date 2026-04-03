@@ -2,20 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
-
-// Una pequeña interfaz para que TypeScript sepa qué es un Cliente
-export interface Client {
-  id?: string;
-  firstName: string;
-  lastName: string;
-  documentId?: string;
-  documentType?: 'CEDULA' | 'RUC' | 'PASAPORTE' | 'OTRO';
-  phone: string;
-  secondaryPhone?: string;
-  email?: string;
-  address?: string;
-  notes?: string;
-}
+import { Client } from '../models/client.interface';
 
 @Injectable({
   providedIn: 'root',

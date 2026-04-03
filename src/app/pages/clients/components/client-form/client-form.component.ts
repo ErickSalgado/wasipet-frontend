@@ -1,6 +1,6 @@
 import { Component, effect, inject, output, input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Client } from '../../../../core/services/client.service';
+import { Client } from '../../../../core/models/client.interface';
 
 @Component({
   selector: 'app-client-form',

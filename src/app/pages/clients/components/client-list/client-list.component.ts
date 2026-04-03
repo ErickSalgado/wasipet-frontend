@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Client } from '../../../../core/services/client.service';
+import { Client } from '../../../../core/models/client.interface';
 
 @Component({
   selector: 'app-client-list',
