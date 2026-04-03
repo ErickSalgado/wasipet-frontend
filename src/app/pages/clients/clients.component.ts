@@ -18,7 +18,7 @@ export class ClientsComponent {
   private readonly clientService = inject(ClientService);
   private readonly alertService = inject(AlertService);
 
-  private refreshTrigger = new BehaviorSubject<void>(undefined);
+  private readonly refreshTrigger = new BehaviorSubject<void>(undefined);
 
   isLoading = signal<boolean>(true);
   showForm = signal<boolean>(false);
@@ -52,7 +52,7 @@ export class ClientsComponent {
 
   async deleteClient(id: string) {
     const confirmed = await this.alertService.confirm(
-      '¿Estás segura de que deseas eliminar este cliente? Esta acción no se puede deshacer.',
+      '¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.',
       'Eliminar cliente'
     );
 

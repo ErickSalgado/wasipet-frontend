@@ -1,1 +1,79 @@
-<p>pet-list works!</p>
+<div class="bg-wp-champagne rounded-xl p-6 shadow-sm overflow-x-auto">
+    @if (isLoading()) {
+    <div class="py-12 text-center text-wp-space font-bold animate-pulse">Cargando pacientes...</div>
+    } @else {
+    <table class="w-full text-left border-collapse min-w-[700px]">
+        <thead>
+            <tr>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10">Mascota</th>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10">Detalles Clínicos</th>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10">Dueño</th>
+                <th class="p-4 text-wp-space opacity-80 font-bold border-b-2 border-black/10 text-right">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (pet of pets(); track pet.id) {
+            <tr class="border-b border-black/5 hover:bg-wp-robin/10 transition-colors duration-200">
+                <td class="p-4 text-wp-space">
+                    <span class="font-bold text-lg">{{ pet.name }}</span>
+                    <span class="text-xs font-bold uppercase opacity-80 ml-2 px-2 py-0.5 rounded-full"
+                          [class.bg-blue-100]="pet.species === 'DOG'" [class.text-blue-700]="pet.species === 'DOG'"
+                          [class.bg-orange-100]="pet.species === 'CAT'" [class.text-orange-700]="pet.species === 'CAT'"
+                          [class.bg-gray-200]="pet.species === 'OTHER'" [class.text-gray-700]="pet.species === 'OTHER'">
+                        {{ pet.species === 'DOG' ? 'PERRO' : pet.species === 'CAT' ? 'GATO' : 'OTRO' }}
+                    </span>
+                    <br>
+                    <span class="text-sm opacity-80">{{ pet.breed || 'Sin raza definida' }}</span>
+                    
+                    @if (pet.medicalNotes || pet.dietNotes || pet.generalNotes) {
+                    <span class="material-icons text-xs text-wp-robin ml-2 align-middle cursor-help"
+                        title="Notas: {{ pet.medicalNotes }} | {{ pet.dietNotes }} | {{ pet.generalNotes }}">info</span>
+                    }
+                </td>
+
+                <td class="p-4 text-wp-space">
+                    <div class="text-sm">
+                        <span class="opacity-70">Sexo:</span> 
+                        <span class="font-medium">{{ pet.sex === 'MALE' ? 'Macho' : pet.sex === 'FEMALE' ? 'Hembra' : 'N/A' }}</span>
+                    </div>
+                    <div class="text-sm mt-0.5">
+                        <span class="opacity-70">Edad:</span> <span class="font-medium">{{ pet.age || 'N/A' }}</span>
+                        <span class="opacity-40 mx-1">|</span> 
+                        <span class="opacity-70">Peso:</span> <span class="font-medium">{{ pet.weight ? pet.weight + ' kg' : 'N/A' }}</span>
+                    </div>
+                </td>
+
+                <td class="p-4 text-wp-space">
+                    <div class="font-bold">{{ pet.client?.firstName }} {{ pet.client?.lastName }}</div>
+                    <div class="text-xs opacity-70">Doc: {{ pet.client?.documentId || 'N/A' }}</div>
+                </td>
+
+                <td class="p-4 flex justify-end gap-2">
+                    <button class="p-2 text-wp-space opacity-60 hover:opacity-100 hover:bg-black/10 rounded-md transition-all"
+                        title="Ver historial médico">
+                        <span class="material-icons text-xl">visibility</span>
+                    </button>
+                    <button (click)="edit.emit(pet)"
+                        class="p-2 text-wp-space opacity-60 hover:text-wp-robin hover:bg-wp-robin/10 rounded-md transition-all"
+                        title="Editar">
+                        <span class="material-icons text-xl">edit</span>
+                    </button>
+                    <button (click)="delete.emit(pet.id!)"
+                        class="p-2 text-wp-space opacity-60 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all"
+                        title="Eliminar">
+                        <span class="material-icons text-xl">delete</span>
+                    </button>
+                </td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="4" class="py-16 text-center opacity-60">
+                    <span class="material-icons text-5xl mb-4 text-wp-space">pets</span>
+                    <p class="text-wp-space">Aún no hay mascotas registradas en esta sucursal.</p>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>

@@ -1,1 +1,22 @@
-<p>pets works!</p>
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+    <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-wp-space mb-1">Mascotas</h2>
+        <p class="text-sm sm:text-base text-wp-space opacity-70">Gestiona los amigos peludos</p>
+    </div>
+
+    @if (!showForm()) {
+    <button (click)="toggleForm()"
+        class="w-full sm:w-auto flex justify-center items-center gap-2 px-5 py-2.5 bg-wp-robin text-wp-space font-bold rounded-lg shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all">
+        <span class="material-icons">add</span>
+        Nueva Mascota
+    </button>
+    }
+</div>
+
+@if (showForm()) {
+<app-pet-form [pet]="editingPet()" [clients]="clients()" (cancelForm)="toggleForm()" (save)="savePet($event)">
+</app-pet-form>
+} @else {
+<app-pet-list [pets]="pets()" [isLoading]="isLoading()" (edit)="editPet($event)" (delete)="deletePet($event)">
+</app-pet-list>
+}

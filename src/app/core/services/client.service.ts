@@ -21,7 +21,8 @@ export class ClientService {
   }
 
   updateClient(id: string, client: Partial<Client>): Observable<Client> {
-    return this.http.patch<Client>(`${this.apiUrl}/${id}`, client);
+    const { id: _, ...payload } = client;
+    return this.http.patch<Client>(`${this.apiUrl}/${id}`, payload);
   }
 
   deleteClient(id: string): Observable<any> {

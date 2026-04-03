@@ -1,26 +1,26 @@
 <div class="flex items-center justify-between w-full h-full">
-  
+
   <div class="flex items-center gap-2 sm:gap-4">
-    <button (click)="onToggleMenu()" class="p-2 text-wp-space rounded-md hover:bg-black/5 transition-colors hidden md:block">
+    <button (click)="onToggleMenu()"
+      class="p-2 text-wp-space rounded-md hover:bg-black/5 transition-colors hidden md:block">
       <span class="material-icons">menu</span>
     </button>
-    <h1 class="text-lg sm:text-xl font-bold text-wp-space m-0">Dashboard Principal</h1>
   </div>
 
   <div class="flex items-center gap-4">
     <div class="flex items-center gap-3">
-      
+
       <div class="hidden sm:flex flex-col text-right">
         @if (currentUser()) {
-          <span class="text-sm font-bold text-wp-space">{{ currentUser().name }}</span>
-          <span class="text-xs text-wp-space opacity-70">{{ currentUser().role }}</span>
+        <span class="text-sm font-bold text-wp-space">{{ currentUser().name }}</span>
+        <span class="text-xs text-wp-space opacity-70">{{ currentUser().role }}</span>
         }
       </div>
-      
+
       <div class="w-10 h-10 rounded-full bg-wp-robin/20 flex items-center justify-center text-wp-robin shadow-sm">
         <span class="material-icons text-2xl">account_circle</span>
       </div>
-      
+
     </div>
   </div>
 </div>
