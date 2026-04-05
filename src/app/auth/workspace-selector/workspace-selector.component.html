@@ -9,12 +9,12 @@
     <div class="cards-grid">
       <div class="pro-card active">
         <span class="material-icons card-icon">domain</span>
-        <h3>WasiPet Centro</h3>
+        <h3>{{ workspaces().length > 0 ? workspaces()[0].organizationName : 'WasiPet' }}</h3>
         @if (currentUser()) {
-          <span class="badge">Rol: {{ currentUser().role }}</span>
+          <span class="badge">Rol: {{ currentUser().role || 'Administrador' }}</span>
         }
       </div>
-      </div>
+    </div>
   </div>
 
   <div class="half right-side">
@@ -24,26 +24,25 @@
     </div>
 
     <div class="cards-grid">
-      <div class="pro-card" 
-           [class.active]="selectedBranch() === 'Sede Principal'"
-           (click)="selectBranch('Sede Principal')">
-        <span class="material-icons card-icon">storefront</span>
-        <h3>Sede Principal</h3>
-        <p class="card-desc">Quito, Ecuador</p>
-      </div>
-
-      <div class="pro-card" 
-           [class.active]="selectedBranch() === 'Sede Norte'"
-           (click)="selectBranch('Sede Norte')">
-        <span class="material-icons card-icon">storefront</span>
-        <h3>Sede Norte</h3>
-        <p class="card-desc">Próximamente</p>
-      </div>
       
-      </div>
+      @for (workspace of workspaces(); track workspace.workspaceId) {
+        <div class="pro-card" 
+             [class.active]="selectedWorkspace() === workspace.workspaceId"
+             (click)="selectBranch(workspace.workspaceId)">
+          <span class="material-icons card-icon">storefront</span>
+          <h3>{{ workspace.branchName }}</h3>
+          <p class="card-desc">{{ workspace.organizationName }}</p>
+        </div>
+      } @empty {
+        <div class="text-center p-4 opacity-70">
+          <p>No tienes sucursales asignadas.</p>
+        </div>
+      }
+      
+    </div>
 
     <div class="action-footer">
-      <button class="btn-robin" [disabled]="isLoading()" (click)="enterSystem()">
+      <button class="btn-robin" [disabled]="isLoading() || !selectedWorkspace()" (click)="enterSystem()">
         {{ isLoading() ? 'Cargando...' : 'Ingresar al Sistema' }}
       </button>
     </div>

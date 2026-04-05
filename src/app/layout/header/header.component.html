@@ -7,20 +7,64 @@
     </button>
   </div>
 
-  <div class="flex items-center gap-4">
-    <div class="flex items-center gap-3">
+  <div class="flex items-center gap-4 relative">
+
+    <button (click)="toggleUserMenu()"
+      class="flex items-center gap-3 focus:outline-none group p-1.5 pr-2 rounded-full hover:bg-black/5 transition-colors">
 
       <div class="hidden sm:flex flex-col text-right">
         @if (currentUser()) {
-        <span class="text-sm font-bold text-wp-space">{{ currentUser().name }}</span>
-        <span class="text-xs text-wp-space opacity-70">{{ currentUser().role }}</span>
+        <span class="text-sm font-bold text-wp-space leading-tight">{{ currentUser().name }}</span>
+        <span class="text-xs text-wp-space opacity-70 leading-tight">{{ currentUser().role || 'Administrador' }}</span>
         }
       </div>
 
-      <div class="w-10 h-10 rounded-full bg-wp-robin/20 flex items-center justify-center text-wp-robin shadow-sm">
+      <div
+        class="w-10 h-10 rounded-full bg-wp-robin/20 flex items-center justify-center text-wp-robin shadow-sm group-hover:ring-2 ring-wp-robin/50 transition-all">
         <span class="material-icons text-2xl">account_circle</span>
       </div>
 
+      <span class="material-icons text-wp-space opacity-50 text-sm transition-transform duration-200"
+        [class.rotate-180]="isUserMenuOpen()">expand_more</span>
+    </button>
+
+    @if (isUserMenuOpen()) {
+    <div class="fixed inset-0 z-40" (click)="closeUserMenu()"></div>
+
+    <div
+      class="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-black/5 py-2 z-50 origin-top-right transition-all">
+
+      <div class="px-4 py-3 border-b border-black/5 sm:hidden">
+        <p class="text-sm font-bold text-wp-space">{{ currentUser()?.name || 'Usuario' }}</p>
+        <p class="text-xs text-wp-space opacity-70">{{ currentUser()?.role || 'Administrador' }}</p>
+      </div>
+
+      <button
+        class="w-full text-left px-4 py-2.5 text-sm text-wp-space hover:bg-wp-champagne hover:text-wp-robin transition-colors flex items-center gap-3">
+        <span class="material-icons text-lg opacity-70">business</span>
+        Mi Organización
+      </button>
+
+      <button
+        class="w-full text-left px-4 py-2.5 text-sm text-wp-space hover:bg-wp-champagne hover:text-wp-robin transition-colors flex items-center gap-3">
+        <span class="material-icons text-lg opacity-70">manage_accounts</span>
+        Mi Perfil
+      </button>
+
+      <button
+        class="w-full text-left px-4 py-2.5 text-sm text-wp-space hover:bg-wp-champagne hover:text-wp-robin transition-colors flex items-center gap-3">
+        <span class="material-icons text-lg opacity-70">lock_reset</span>
+        Cambiar Contraseña
+      </button>
+
+      <div class="border-t border-black/5 my-1"></div>
+
+      <button (click)="logout()"
+        class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors flex items-center gap-3 font-bold">
+        <span class="material-icons text-lg">logout</span>
+        Salir
+      </button>
     </div>
+    }
   </div>
 </div>

@@ -1,50 +1,61 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService, Workspace } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-workspace-selector',
   standalone: true,
   templateUrl: './workspace-selector.component.html',
-  styleUrl: './workspace-selector.component.scss'
+  styleUrl: './workspace-selector.component.scss',
 })
 export class WorkspaceSelectorComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
 
-  // State management using Signals
   currentUser = signal<any>(null);
-  selectedBranch = signal<string>('Sede Principal'); // Default branch
+  workspaces = signal<Workspace[]>([]); // Lista dinámica de sucursales
+  selectedWorkspace = signal<string | null>(null);
   isLoading = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.loadUserData();
-  }
+    const savedUser = localStorage.getItem('wasipet_temp_user');
+    const savedWorkspaces = localStorage.getItem('wasipet_workspaces');
 
-  // Retrieve user data from localStorage
-  private loadUserData(): void {
-    const savedUser = localStorage.getItem('wasipet_user');
-    
-    if (savedUser) {
+    if (savedUser && savedWorkspaces) {
       this.currentUser.set(JSON.parse(savedUser));
+      const parsedWorkspaces = JSON.parse(savedWorkspaces);
+      this.workspaces.set(parsedWorkspaces);
+
+      // Preseleccionar la primera por defecto
+      if (parsedWorkspaces.length > 0) {
+        this.selectedWorkspace.set(parsedWorkspaces[0].workspaceId);
+      }
     } else {
-      // Security measure: if no user data is found, redirect to login
       this.router.navigate(['/login']);
     }
   }
 
-  // Handle branch selection
-  selectBranch(branchName: string): void {
-    this.selectedBranch.set(branchName);
+  selectBranch(workspaceId: string): void {
+    this.selectedWorkspace.set(workspaceId);
   }
 
-  // Action for the main button
   enterSystem(): void {
+    const workspaceId = this.selectedWorkspace();
+    const user = this.currentUser();
+
+    if (!workspaceId || !user) return;
+
     this.isLoading.set(true);
-    
-    console.log('Entering system with branch:', this.selectedBranch());
-    
-    // Simulate a brief loading state for better UX, then navigate
-    setTimeout(() => {
-      this.router.navigate(['/dashboard']);
-    }, 800);
+
+    // 🔥 Llamamos al backend para obtener el Token final
+    this.authService.selectWorkspace(user.id, workspaceId).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard']);
+      },
+      error: () => {
+        this.isLoading.set(false);
+        alert('Error al acceder a la sucursal');
+      },
+    });
   }
 }
