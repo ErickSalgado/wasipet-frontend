@@ -1,0 +1,135 @@
+<div class="mt-4">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+        <div>
+            @if (viewMode() === 'pets') {
+            <h2 class="text-2xl sm:text-3xl font-bold text-wp-space mb-1">Pacientes</h2>
+            <p class="text-sm sm:text-base text-wp-space opacity-70">Selecciona un paciente para ver su historial médico
+            </p>
+            } @else {
+            <div class="flex items-center gap-3">
+                <button (click)="backToPets()"
+                    class="p-2 bg-gray-200 text-wp-space rounded-full hover:bg-gray-300 transition-colors">
+                    <span class="material-icons text-xl" translate="no">arrow_back</span>
+                </button>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-wp-space mb-1">Historial: {{ selectedPet()?.name }}
+                    </h2>
+                    <p class="text-sm sm:text-base text-wp-space opacity-70">{{ selectedPet()?.breed ||
+                        selectedPet()?.species }}</p>
+                </div>
+            </div>
+            }
+        </div>
+
+        @if (viewMode() === 'vaccines' && !showForm()) {
+        <button (click)="toggleForm()"
+            class="w-full sm:w-auto flex justify-center items-center gap-2 px-5 py-2.5 bg-wp-robin text-wp-space font-bold rounded-lg shadow-md hover:-translate-y-0.5 transition-all">
+            <span class="material-icons" translate="no">add_moderator</span>
+            Registrar Vacuna
+        </button>
+        }
+    </div>
+
+    @if (showForm()) {
+    <app-vaccine-form [vaccine]="editingVaccine()" [pets]="pets()" (cancelForm)="toggleForm()"
+        (save)="saveVaccine($event)">
+    </app-vaccine-form>
+    }
+    @else if (viewMode() === 'pets') {
+    <div class="mb-6 relative">
+        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" translate="no">search</span>
+        <input #petSearch type="text" placeholder="Buscar por nombre, raza o especie..."
+            (input)="petSearchTerm.set(petSearch.value)"
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-wp-robin outline-none shadow-sm">
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        @for (pet of filteredPets(); track pet.id) {
+        <div (click)="openPetRecords(pet)"
+            class="bg-white rounded-xl shadow-sm border border-black/5 p-5 hover:shadow-md hover:border-wp-robin cursor-pointer transition-all group">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-14 h-14 rounded-full bg-wp-champagne flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <span class="material-icons text-wp-robin text-2xl" translate="no">pets</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-wp-space text-lg">{{ pet.name }}</h3>
+                    <p class="text-xs text-wp-space/60">{{ pet.species | uppercase }} {{ pet.breed ? '• ' + pet.breed :
+                        '' }}</p>
+                </div>
+            </div>
+        </div>
+        } @empty {
+        <div class="col-span-full py-10 text-center text-gray-500">No se encontraron mascotas.</div>
+        }
+    </div>
+    }
+    @else {
+    <div class="mb-6 bg-white p-4 rounded-xl shadow-sm border border-black/5 flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+                translate="no">search</span>
+            <input #vacSearch type="text" placeholder="Buscar vacuna, veterinario o notas..."
+                (input)="vaccineSearchTerm.set(vacSearch.value)"
+                class="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-wp-robin outline-none">
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-wp-space opacity-70">Desde:</span>
+            <input #dateFromInput type="date" (change)="dateFrom.set(dateFromInput.value)"
+                class="py-2 px-3 text-sm border border-gray-300 rounded-lg outline-none focus:ring-wp-robin">
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-wp-space opacity-70">Hasta:</span>
+            <input #dateToInput type="date" (change)="dateTo.set(dateToInput.value)"
+                class="py-2 px-3 text-sm border border-gray-300 rounded-lg outline-none focus:ring-wp-robin">
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (vac of filteredVaccines(); track vac.id) {
+        <div class="bg-white rounded-xl shadow-sm border border-black/5 p-5 hover:shadow-md transition-shadow relative group border-l-4 border-l-wp-robin cursor-pointer"
+            (click)="editVaccine(vac)">
+            <div class="space-y-2">
+                <h3 class="text-lg font-bold text-wp-space flex items-center gap-2">
+                    <span class="material-icons text-wp-robin" translate="no">vaccines</span>
+                    {{ vac.name }}
+                </h3>
+
+                <div class="flex items-center gap-2 text-sm text-wp-space/80">
+                    <span class="material-icons text-[16px] opacity-70" translate="no">event_available</span>
+                    <span>{{ vac.applicationDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+
+                @if (vac.veterinarian) {
+                <div class="text-sm text-wp-space/80 flex items-center gap-2">
+                    <span class="material-icons text-[16px] opacity-70" translate="no">person</span>
+                    {{ vac.veterinarian }}
+                </div>
+                }
+
+                @if (vac.nextDoseDate) {
+                <div
+                    class="mt-3 inline-flex items-center gap-1 bg-red-50 text-red-700 px-2 py-1 rounded-md text-xs font-bold border border-red-100">
+                    <span class="material-icons text-[14px]" translate="no">warning</span>
+                    Próxima: {{ vac.nextDoseDate | date:'dd/MM/yyyy' }}
+                </div>
+                }
+            </div>
+
+            <div class="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button (click)="deleteVaccine(vac.id!); $event.stopPropagation()"
+                    class="p-1.5 bg-red-100 text-red-600 rounded-md hover:bg-red-200" title="Eliminar">
+                    <span class="material-icons text-[18px]" translate="no">delete</span>
+                </button>
+            </div>
+        </div>
+        } @empty {
+        <div class="col-span-full py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 text-center">
+            <span class="material-icons text-5xl text-gray-300 mb-3" translate="no">health_and_safety</span>
+            <h3 class="text-lg font-bold text-wp-space mb-1">Sin Registros</h3>
+            <p class="text-wp-space/60">Ajusta los filtros o crea un nuevo registro.</p>
+        </div>
+        }
+    </div>
+    }
+</div>

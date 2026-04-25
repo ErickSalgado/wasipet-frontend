@@ -23,19 +23,36 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
+        loadComponent: () =>
+          import('./pages/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent,
+          ),
       },
       {
         path: 'clients',
-        loadComponent: () => import('./pages/clients/clients.component').then(m => m.ClientsComponent),
+        loadComponent: () =>
+          import('./pages/clients/clients.component').then(
+            (m) => m.ClientsComponent,
+          ),
       },
       {
         path: 'pets',
-        loadComponent: () => import('./pages/pets/pets.component').then(m => m.PetsComponent),
+        loadComponent: () =>
+          import('./pages/pets/pets.component').then((m) => m.PetsComponent),
+      },
+      {
+        path: 'vaccines',
+        loadComponent: () =>
+          import('./pages/pets/components/pet-vaccines/pet-vaccines.component').then(
+            (m) => m.PetVaccinesComponent,
+          ),
       },
       {
         path: 'organizations',
-        loadComponent: () => import('./pages/organizations/organizations.component').then(m => m.OrganizationsComponent),
+        loadComponent: () =>
+          import('./pages/organizations/organizations.component').then(
+            (m) => m.OrganizationsComponent,
+          ),
       },
     ],
   },

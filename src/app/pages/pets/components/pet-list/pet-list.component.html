@@ -26,7 +26,7 @@
                     <span class="text-sm opacity-80">{{ pet.breed || 'Sin raza definida' }}</span>
                     
                     @if (pet.medicalNotes || pet.dietNotes || pet.generalNotes) {
-                    <span class="material-icons text-xs text-wp-robin ml-2 align-middle cursor-help"
+                    <span class="material-icons text-xs text-wp-robin ml-2 align-middle cursor-help" translate="no"
                         title="Notas: {{ pet.medicalNotes }} | {{ pet.dietNotes }} | {{ pet.generalNotes }}">info</span>
                     }
                 </td>
@@ -51,24 +51,24 @@
                 <td class="p-4 flex justify-end gap-2">
                     <button class="p-2 text-wp-space opacity-60 hover:opacity-100 hover:bg-black/10 rounded-md transition-all"
                         title="Ver historial médico">
-                        <span class="material-icons text-xl">visibility</span>
+                        <span class="material-icons text-xl" translate="no">visibility</span>
                     </button>
                     <button (click)="edit.emit(pet)"
                         class="p-2 text-wp-space opacity-60 hover:text-wp-robin hover:bg-wp-robin/10 rounded-md transition-all"
                         title="Editar">
-                        <span class="material-icons text-xl">edit</span>
+                        <span class="material-icons text-xl" translate="no">edit</span>
                     </button>
                     <button (click)="delete.emit(pet.id!)"
                         class="p-2 text-wp-space opacity-60 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all"
                         title="Eliminar">
-                        <span class="material-icons text-xl">delete</span>
+                        <span class="material-icons text-xl" translate="no">delete</span>
                     </button>
                 </td>
             </tr>
             } @empty {
             <tr>
                 <td colspan="4" class="py-16 text-center opacity-60">
-                    <span class="material-icons text-5xl mb-4 text-wp-space">pets</span>
+                    <span class="material-icons text-5xl mb-4 text-wp-space" translate="no">pets</span>
                     <p class="text-wp-space">Aún no hay mascotas registradas en esta sucursal.</p>
                 </td>
             </tr>

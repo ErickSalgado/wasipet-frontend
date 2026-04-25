@@ -3,7 +3,7 @@
   <div class="flex items-center gap-2 sm:gap-4">
     <button (click)="onToggleMenu()"
       class="p-2 text-wp-space rounded-md hover:bg-black/5 transition-colors hidden md:block">
-      <span class="material-icons">menu</span>
+      <span class="material-icons" translate="no">menu</span>
     </button>
   </div>
 
@@ -21,10 +21,10 @@
 
       <div
         class="w-10 h-10 rounded-full bg-wp-robin/20 flex items-center justify-center text-wp-robin shadow-sm group-hover:ring-2 ring-wp-robin/50 transition-all">
-        <span class="material-icons text-2xl">account_circle</span>
+        <span class="material-icons text-2xl" translate="no">account_circle</span>
       </div>
 
-      <span class="material-icons text-wp-space opacity-50 text-sm transition-transform duration-200"
+      <span class="material-icons text-wp-space opacity-50 text-sm transition-transform duration-200" translate="no"
         [class.rotate-180]="isUserMenuOpen()">expand_more</span>
     </button>
 
@@ -41,19 +41,19 @@
 
       <button
         class="w-full text-left px-4 py-2.5 text-sm text-wp-space hover:bg-wp-champagne hover:text-wp-robin transition-colors flex items-center gap-3">
-        <span class="material-icons text-lg opacity-70">business</span>
+        <span class="material-icons text-lg opacity-70" translate="no">business</span>
         Mi Organización
       </button>
 
       <button
         class="w-full text-left px-4 py-2.5 text-sm text-wp-space hover:bg-wp-champagne hover:text-wp-robin transition-colors flex items-center gap-3">
-        <span class="material-icons text-lg opacity-70">manage_accounts</span>
+        <span class="material-icons text-lg opacity-70" translate="no">manage_accounts</span>
         Mi Perfil
       </button>
 
       <button
         class="w-full text-left px-4 py-2.5 text-sm text-wp-space hover:bg-wp-champagne hover:text-wp-robin transition-colors flex items-center gap-3">
-        <span class="material-icons text-lg opacity-70">lock_reset</span>
+        <span class="material-icons text-lg opacity-70" translate="no">lock_reset</span>
         Cambiar Contraseña
       </button>
 
@@ -61,7 +61,7 @@
 
       <button (click)="logout()"
         class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors flex items-center gap-3 font-bold">
-        <span class="material-icons text-lg">logout</span>
+        <span class="material-icons text-lg" translate="no">logout</span>
         Salir
       </button>
     </div>

@@ -17,7 +17,7 @@
                 <td class="p-4 text-wp-space">
                     <span class="font-bold">{{ client.firstName }} {{ client.lastName }}</span>
                     @if (client.notes) {
-                    <span class="material-icons text-xs text-wp-robin ml-2 align-middle"
+                    <span class="material-icons text-xs text-wp-robin ml-2 align-middle" translate="no"
                         title="{{ client.notes }}">info</span>
                     }
                 </td>
@@ -33,24 +33,24 @@
                     <button
                         class="p-2 text-wp-space opacity-60 hover:opacity-100 hover:bg-black/10 rounded-md transition-all"
                         title="Ver detalles">
-                        <span class="material-icons text-xl">visibility</span>
+                        <span class="material-icons text-xl" translate="no">visibility</span>
                     </button>
                     <button (click)="edit.emit(client)"
                         class="p-2 text-wp-space opacity-60 hover:text-wp-robin hover:bg-wp-robin/10 rounded-md transition-all"
                         title="Editar">
-                        <span class="material-icons text-xl">edit</span>
+                        <span class="material-icons text-xl" translate="no">edit</span>
                     </button>
                     <button (click)="delete.emit(client.id!)"
                         class="p-2 text-wp-space opacity-60 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all"
                         title="Eliminar">
-                        <span class="material-icons text-xl">delete</span>
+                        <span class="material-icons text-xl" translate="no">delete</span>
                     </button>
                 </td>
             </tr>
             } @empty {
             <tr>
                 <td colspan="4" class="py-16 text-center opacity-60">
-                    <span class="material-icons text-5xl mb-4 text-wp-space">sentiment_dissatisfied</span>
+                    <span class="material-icons text-5xl mb-4 text-wp-space" translate="no">sentiment_dissatisfied</span>
                     <p class="text-wp-space">Aún no hay clientes registrados en esta sucursal.</p>
                 </td>
             </tr>

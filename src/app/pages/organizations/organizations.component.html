@@ -7,7 +7,7 @@
     @if (!showForm()) {
     <button (click)="toggleForm()"
         class="w-full sm:w-auto flex justify-center items-center gap-2 px-5 py-2.5 bg-wp-robin text-wp-space font-bold rounded-lg shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all">
-        <span class="material-icons">domain_add</span>
+        <span class="material-icons" translate="no">domain_add</span>
         Nueva Organización
     </button>
     }
@@ -25,7 +25,7 @@
         <div>
             <div class="flex justify-between items-start mb-3">
                 <div class="w-10 h-10 rounded-lg bg-wp-champagne text-wp-space flex items-center justify-center">
-                    <span class="material-icons">domain</span>
+                    <span class="material-icons" translate="no">domain</span>
                 </div>
                 <span
                     class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-md uppercase tracking-wider">
@@ -36,7 +36,7 @@
             <h3 class="text-xl font-bold text-wp-space mb-2">{{ org.name }}</h3>
 
             <div class="text-xs text-wp-space opacity-60 flex items-center gap-1 mb-4">
-                <span class="material-icons text-[14px]">calendar_today</span>
+                <span class="material-icons text-[14px]" translate="no">calendar_today</span>
                 Registrada: {{ org.createdAt | date:'dd/MM/yyyy' }}
             </div>
         </div>
@@ -44,19 +44,19 @@
         <div class="flex gap-2 pt-4 border-t border-black/5 mt-auto">
             <button
                 class="flex-1 py-2 text-sm font-bold text-wp-space bg-black/5 hover:bg-black/10 rounded-lg transition-colors flex justify-center items-center gap-1">
-                <span class="material-icons text-sm opacity-70">store</span>
+                <span class="material-icons text-sm opacity-70" translate="no">store</span>
                 Ver Sucursales
             </button>
             <button (click)="editOrganization(org)"
                 class="p-2 text-wp-space bg-black/5 hover:bg-wp-robin/20 hover:text-wp-robin rounded-lg transition-colors"
                 title="Editar Nombre">
-                <span class="material-icons text-sm">edit</span>
+                <span class="material-icons text-sm" translate="no">edit</span>
             </button>
         </div>
     </div>
     } @empty {
     <div class="col-span-full bg-wp-champagne rounded-xl p-12 text-center border-2 border-dashed border-wp-robin/30">
-        <span class="material-icons text-5xl text-wp-robin opacity-50 mb-3">business_center</span>
+        <span class="material-icons text-5xl text-wp-robin opacity-50 mb-3" translate="no">business_center</span>
         <h3 class="text-xl font-bold text-wp-space mb-1">Sin Organizaciones</h3>
         <p class="text-wp-space opacity-70">Aún no hay empresas registradas en el sistema maestro.</p>
     </div>

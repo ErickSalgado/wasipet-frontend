@@ -8,11 +8,12 @@ import { PetListComponent } from './components/pet-list/pet-list.component';
 import { PetFormComponent } from './components/pet-form/pet-form.component';
 import { Pet } from '../../core/models/pet.interface';
 import { CommonModule } from '@angular/common';
+import { PetVaccinesComponent } from './components/pet-vaccines/pet-vaccines.component';
 
 @Component({
   selector: 'app-pets',
   standalone: true,
-  imports: [CommonModule, PetListComponent, PetFormComponent],
+  imports: [CommonModule, PetListComponent, PetFormComponent, PetVaccinesComponent],
   templateUrl: './pets.component.html',
 })
 export class PetsComponent {

@@ -12,7 +12,7 @@
             </div>
 
             <div class="flex flex-col flex-nowrap gap-y-1">
-                <h5>¡Hola de nuevo <i class="material-icons align-middle text-lg">pets</i>!</h5>
+                <h5>¡Hola de nuevo <i class="material-icons align-middle text-lg" translate="no">pets</i>!</h5>
                 <h2 class="texto-inicio-sesion font-bold">Iniciar Sesión</h2>
             </div>
 
@@ -61,7 +61,7 @@
                     <!-- Botón para alternar visibilidad de contraseña -->
                     <button type="button" (click)="togglePasswordVisibility()" title="Mostrar contraseña"
                         class="absolute right-2 top-3 z-20 text-gray-500 hover:text-gray-700 focus:outline-none">
-                        <i class="material-icons text-xl">{{ showPassword() ? 'visibility_off' : 'visibility' }}</i>
+                        <i class="material-icons text-xl" translate="no">{{ showPassword() ? 'visibility_off' : 'visibility' }}</i>
                     </button>
 
                     <!-- Manejo de errores de Clave con @if -->
@@ -100,7 +100,7 @@
                             </svg>
                             <span>Iniciando sesión...</span>
                             } @else {
-                            <i class="material-icons mr-2">login</i>
+                            <i class="material-icons mr-2" translate="no">login</i>
                             <span>Iniciar sesión</span>
                             }
                         </div>
