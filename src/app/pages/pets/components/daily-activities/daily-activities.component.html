@@ -1,0 +1,27 @@
+<div class="bg-white rounded-xl shadow-sm border border-black/5 p-6 mt-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-wp-space flex items-center gap-2">
+            <span class="material-icons text-wp-robin" translate="no">history_edu</span>
+            Diario de Actividades
+        </h2>
+
+        <!-- Botón para registrar nueva actividad -->
+        @if (!showForm()) {
+        <button (click)="openNewForm()"
+            class="px-4 py-2 bg-wp-robin text-wp-space font-bold rounded-lg shadow-sm hover:-translate-y-0.5 transition-transform flex items-center gap-2">
+            <span class="material-icons text-[18px]" translate="no">add</span>
+            Registrar Actividad
+        </button>
+        }
+    </div>
+
+    <!-- Renderizado Condicional: Formulario vs Feed de Línea de Tiempo -->
+    @if (showForm()) {
+    <app-daily-activity-form [activity]="selectedActivity()" (save)="onSaveActivity($event)" (cancelForm)="closeForm()">
+    </app-daily-activity-form>
+    } @else {
+    <app-daily-activity-feed [activities]="activities()" (edit)="onEditActivity($event)"
+        (delete)="onDeleteActivity($event)">
+    </app-daily-activity-feed>
+    }
+</div>

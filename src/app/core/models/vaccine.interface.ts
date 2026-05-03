@@ -6,8 +6,9 @@ export interface Vaccine {
   nextDoseDate?: string | null;
   veterinarian?: string;
   notes?: string;
+  weight?: number;
+  dewormingDetails?: string;
   pet?: {
-    // La info que viene de la relación de Prisma
     name: string;
     species: string;
     breed?: string;

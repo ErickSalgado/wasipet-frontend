@@ -9,4 +9,5 @@ export interface Client {
   email?: string;
   address?: string;
   notes?: string;
+  isActive?: boolean;
 }

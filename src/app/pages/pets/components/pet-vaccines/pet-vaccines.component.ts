@@ -1,7 +1,14 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  computed,
+  HostListener,
+  input,
+  effect,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VaccineService } from '../../../../core/services/vaccine.service';
-import { PetService } from '../../../../core/services/pet.service';
 import { Vaccine } from '../../../../core/models/vaccine.interface';
 import { Pet } from '../../../../core/models/pet.interface';
 import { VaccineFormComponent } from '../vaccine-form/vaccine-form.component';
@@ -12,37 +19,43 @@ import { VaccineFormComponent } from '../vaccine-form/vaccine-form.component';
   imports: [CommonModule, VaccineFormComponent],
   templateUrl: './pet-vaccines.component.html',
 })
-export class PetVaccinesComponent implements OnInit {
+export class PetVaccinesComponent {
   private readonly vaccineService = inject(VaccineService);
-  private readonly petService = inject(PetService);
 
-  viewMode = signal<'pets' | 'vaccines'>('pets');
-  pets = signal<Pet[]>([]);
+  // 🚪 ¡LA PUERTA ESTÁ ABIERTA! Ahora recibe el paciente desde el Orquestador
+  selectedPet = input<Pet | null>(null);
+
   vaccines = signal<Vaccine[]>([]);
-  selectedPet = signal<Pet | null>(null);
-
   showForm = signal(false);
   editingVaccine = signal<Vaccine | null>(null);
 
-  petSearchTerm = signal('');
   vaccineSearchTerm = signal('');
   dateFrom = signal('');
   dateTo = signal('');
+  activeTooltip = signal<string | null>(null);
 
-  // ✨ Clean Code: Uso de Optional Chaining (?.)
-  filteredPets = computed(() => {
-    const term = this.petSearchTerm().toLowerCase();
-    if (!term) return this.pets();
+  constructor() {
+    // ✨ Magia Reactiva: Cada vez que el Orquestador cambia la mascota,
+    // este efecto se dispara y carga las vacunas de ese perrito automáticamente.
+    effect(() => {
+      const pet = this.selectedPet();
+      if (pet?.id) {
+        this.loadVaccinesForPet(pet.id);
+      }
+    });
+  }
 
-    return this.pets().filter(
-      (p) =>
-        p.name.toLowerCase().includes(term) ||
-        p.species?.toLowerCase().includes(term) ||
-        p.breed?.toLowerCase().includes(term),
-    );
-  });
+  @HostListener('document:click')
+  closeTooltips() {
+    this.activeTooltip.set(null);
+  }
 
-  // ✨ Clean Code: Uso de Optional Chaining (?.)
+  toggleTooltip(id: string | undefined, event: Event) {
+    event.stopPropagation();
+    if (!id) return;
+    this.activeTooltip.update((current) => (current === id ? null : id));
+  }
+
   filteredVaccines = computed(() => {
     const term = this.vaccineSearchTerm().toLowerCase();
     const from = this.dateFrom() ? new Date(this.dateFrom()).getTime() : 0;
@@ -61,39 +74,10 @@ export class PetVaccinesComponent implements OnInit {
     });
   });
 
-  ngOnInit() {
-    this.loadPets();
-  }
-
-  loadPets() {
-    this.petService.getPets().subscribe({
-      next: (data: Pet[]) => this.pets.set(data), // ✨ Tipado estricto
-      error: (err: any) => console.error('Error cargando mascotas', err), // ✨ Tipado estricto
-    });
-  }
-
-  openPetRecords(pet: Pet) {
-    this.selectedPet.set(pet);
-    this.viewMode.set('vaccines');
-    this.vaccineSearchTerm.set('');
-    this.dateFrom.set('');
-    this.dateTo.set('');
-
-    if (pet.id) {
-      this.loadVaccinesForPet(pet.id);
-    }
-  }
-
-  backToPets() {
-    this.viewMode.set('pets');
-    this.selectedPet.set(null);
-    this.showForm.set(false);
-  }
-
   loadVaccinesForPet(petId: string) {
     this.vaccineService.getVaccinesByPet(petId).subscribe({
-      next: (data: Vaccine[]) => this.vaccines.set(data), // ✨ Tipado estricto
-      error: (err: any) => console.error('Error cargando vacunas', err), // ✨ Tipado estricto
+      next: (data: Vaccine[]) => this.vaccines.set(data),
+      error: (err: any) => console.error('Error cargando vacunas', err),
     });
   }
 
@@ -107,7 +91,6 @@ export class PetVaccinesComponent implements OnInit {
     this.showForm.set(true);
   }
 
-  // ✨ Clean Code: Validación segura sin usar aserciones "!"
   deleteVaccine(id: string) {
     const petId = this.selectedPet()?.id;
     if (petId && confirm('¿Estás seguro de eliminar este registro médico?')) {
@@ -117,12 +100,11 @@ export class PetVaccinesComponent implements OnInit {
     }
   }
 
-  // ✨ Clean Code: Validación segura sin usar aserciones "!"
   saveVaccine(data: Partial<Vaccine>) {
     const current = this.editingVaccine();
     const petId = this.selectedPet()?.id;
 
-    if (!petId) return; // Seguridad extra
+    if (!petId) return;
 
     const payload = { ...data, petId };
 

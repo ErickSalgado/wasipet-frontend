@@ -1,0 +1,70 @@
+<div class="bg-wp-champagne/30 rounded-xl p-6 border-2 border-dashed border-wp-robin/30">
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-wp-space flex items-center gap-2">
+            <span class="material-icons text-wp-robin" translate="no">
+                {{ activity()?.id ? 'edit_note' : 'add_task' }}
+            </span>
+            {{ activity()?.id ? 'Editar Registro' : 'Nueva Actividad del Día' }}
+        </h3>
+    </div>
+
+    <form [formGroup]="activityForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- Tipo de Actividad -->
+        <div class="flex flex-col">
+            <label class="text-sm font-bold text-wp-space opacity-80 mb-1" for="cboTipo">¿Qué hizo el perrito? *</label>
+            <select id="cboTipo" formControlName="activityType"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wp-robin outline-none bg-white font-medium text-wp-space">
+                <option value="LLEGADA">👋 Llegada a Guardería</option>
+                <option value="COMIDA">🍽️ Comida / Snack</option>
+                <option value="PASEO">🦮 Paseo / Ejercicio</option>
+                <option value="BANO">🛁 Baño / Aseo</option>
+                <option value="MEDICACION">💊 Medicación</option>
+                <option value="JUEGO">🎾 Tiempo de Juego</option>
+                <option value="SALIDA">🏠 Salida / A casa</option>
+                <option value="OTRO">📝 Otro</option>
+            </select>
+        </div>
+
+        <!-- Fecha y Hora -->
+        <div class="flex flex-col">
+            <label class="text-sm font-bold text-wp-space opacity-80 mb-1" for="txtFecha">Fecha y Hora *</label>
+            <input id="txtFecha" type="datetime-local" formControlName="timestamp"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wp-robin outline-none text-wp-space">
+        </div>
+
+        <!-- Descripción / Notas -->
+        <div class="flex flex-col md:col-span-2">
+            <label class="text-sm font-bold text-wp-space opacity-80 mb-1" for="txtDescripcion">Descripción de la
+                actividad *</label>
+            <textarea id="txtDescripcion" formControlName="description" rows="3"
+                placeholder="Ej: Se comió toda su ración de croquetas con un poco de pollo..."
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wp-robin outline-none resize-none text-wp-space"></textarea>
+        </div>
+
+        <!-- URL de Foto (Opcional) -->
+        <div class="flex flex-col md:col-span-2">
+            <label class="text-sm font-bold text-wp-space opacity-80 mb-1" for="txtFoto">Link de Foto (Opcional)</label>
+            <div class="relative flex items-center">
+                <span class="material-icons absolute left-3 text-gray-400 text-[20px]" translate="no">add_a_photo</span>
+                <input id="txtFoto" type="url" formControlName="photoUrl"
+                    placeholder="https://ejemplo.com/foto-perrito.jpg"
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wp-robin outline-none text-wp-space text-sm">
+            </div>
+            <p class="text-[10px] text-gray-500 mt-1 italic">Por ahora pegaremos el enlace, luego implementaremos la
+                subida directa a la nube.</p>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex justify-end gap-3 md:col-span-2 mt-2 border-t border-wp-robin/10 pt-4">
+            <button type="button" (click)="cancelForm.emit()"
+                class="px-6 py-2 border border-gray-400 text-wp-space font-bold rounded-lg hover:bg-black/5 transition-colors">
+                Cancelar
+            </button>
+            <button type="submit" [disabled]="activityForm.invalid"
+                class="px-8 py-2 bg-wp-robin text-wp-space font-bold rounded-lg shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:translate-y-0">
+                {{ activity()?.id ? 'Actualizar' : 'Publicar Actividad' }}
+            </button>
+        </div>
+    </form>
+</div>

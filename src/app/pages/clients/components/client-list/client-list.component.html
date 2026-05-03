@@ -15,9 +15,16 @@
             @for (client of clients(); track client.id) {
             <tr class="border-b border-black/5 hover:bg-wp-robin/10 transition-colors duration-200">
                 <td class="p-4 text-wp-space">
-                    <span class="font-bold">{{ client.firstName }} {{ client.lastName }}</span>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="font-bold">{{ client.firstName }} {{ client.lastName }}</span>
+                        <!-- Badge de Estado (Soft Delete) -->
+                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full"
+                              [ngClass]="client.isActive !== false ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700 opacity-80'">
+                            {{ client.isActive !== false ? 'ACTIVO' : 'INACTIVO' }}
+                        </span>
+                    </div>
                     @if (client.notes) {
-                    <span class="material-icons text-xs text-wp-robin ml-2 align-middle" translate="no"
+                    <span class="material-icons text-xs text-wp-robin align-middle" translate="no"
                         title="{{ client.notes }}">info</span>
                     }
                 </td>
@@ -42,8 +49,8 @@
                     </button>
                     <button (click)="delete.emit(client.id!)"
                         class="p-2 text-wp-space opacity-60 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all"
-                        title="Eliminar">
-                        <span class="material-icons text-xl" translate="no">delete</span>
+                        title="Desactivar / Archivar (Soft Delete)">
+                        <span class="material-icons text-xl" translate="no">archive</span>
                     </button>
                 </td>
             </tr>

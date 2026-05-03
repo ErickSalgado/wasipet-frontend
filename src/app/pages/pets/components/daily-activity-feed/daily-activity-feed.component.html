@@ -1,0 +1,77 @@
+<div class="relative pl-8 sm:pl-10 py-4">
+    <!-- Línea vertical central del Timeline -->
+    <div class="absolute left-[15px] sm:left-[19px] top-0 bottom-0 w-0.5 bg-wp-robin/20"></div>
+
+    @for (act of activities(); track act.id) {
+    <div class="relative mb-8 last:mb-0">
+
+        <!-- Punto de la línea de tiempo (Icono flotante) -->
+        <div
+            class="absolute -left-[31px] sm:-left-[35px] top-1 w-8 h-8 rounded-full bg-white border-2 border-wp-robin flex items-center justify-center z-10 shadow-sm">
+            <span class="material-icons text-wp-robin text-[18px]" translate="no">
+                {{ getActivityIcon(act.activityType) }}
+            </span>
+        </div>
+
+        <!-- Tarjeta de Actividad -->
+        <div class="bg-white rounded-xl border border-black/5 p-4 shadow-sm hover:shadow-md transition-all group"
+            [ngClass]="act.isActive !== false ? 'border-l-4 border-l-wp-robin' : 'opacity-60 grayscale-[0.5]'">
+
+            <div class="flex justify-between items-start mb-2">
+                <div class="flex flex-col gap-1">
+                    <!-- Badge del tipo de actividad -->
+                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full w-fit"
+                        [class]="getBadgeClass(act.activityType)">
+                        {{ act.activityType }}
+                    </span>
+                    <span class="text-xs text-wp-space opacity-60 flex items-center gap-1">
+                        <span class="material-icons text-[14px]" translate="no">schedule</span>
+                        {{ act.timestamp | date:'shortTime' }} - {{ act.timestamp | date:'dd MMM' }}
+                    </span>
+                </div>
+
+                <!-- Acciones (Solo visibles al hacer hover en PC, visibles en móvil por defecto si ajustas CSS) -->
+                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button (click)="edit.emit(act)"
+                        class="p-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100">
+                        <span class="material-icons text-[18px]" translate="no">edit</span>
+                    </button>
+                    <button (click)="delete.emit(act.id!)"
+                        class="p-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100">
+                        <span class="material-icons text-[18px]" translate="no">delete_outline</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Descripción de lo que hizo el perrito -->
+            <p class="text-wp-space text-sm leading-relaxed mb-3">
+                {{ act.description }}
+            </p>
+
+            <!-- Previsualización de Foto (Si Marlon subió alguna) -->
+            @if (act.photoUrl) {
+            <div class="mt-3 rounded-lg overflow-hidden border border-gray-100 max-w-xs">
+                <img [src]="act.photoUrl" alt="Actividad"
+                    class="w-full h-32 object-cover hover:scale-105 transition-transform duration-500">
+            </div>
+            }
+
+            <!-- Badge de Anulado (Si aplicaste Soft Delete) -->
+            @if (act.isActive === false) {
+            <div class="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-wider italic">
+                -- Registro Anulado --
+            </div>
+            }
+        </div>
+    </div>
+    } @empty {
+    <!-- Estado vacío súper amigable -->
+    <div class="text-center py-10">
+        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
+            <span class="material-icons text-gray-300 text-[32px]" translate="no">history</span>
+        </div>
+        <h3 class="text-lg font-bold text-wp-space mb-1">Sin actividades recientes</h3>
+        <p class="text-gray-500 text-sm italic">Registra la primera comida, paseo o baño del día.</p>
+    </div>
+    }
+</div>

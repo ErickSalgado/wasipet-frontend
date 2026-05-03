@@ -16,6 +16,10 @@ export class ClientService {
     return this.http.get<Client[]>(this.apiUrl);
   }
 
+  findAllActive(): Observable<Client[]> {
+    return this.http.get<Client[]>(`${this.apiUrl}/active`);
+  }
+
   createClient(client: Client): Observable<Client> {
     return this.http.post<Client>(this.apiUrl, client);
   }

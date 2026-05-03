@@ -41,10 +41,10 @@ export const routes: Routes = [
           import('./pages/pets/pets.component').then((m) => m.PetsComponent),
       },
       {
-        path: 'vaccines',
+        path: 'patient-records',
         loadComponent: () =>
-          import('./pages/pets/components/pet-vaccines/pet-vaccines.component').then(
-            (m) => m.PetVaccinesComponent,
+          import('./pages/pets/components/patient-record/patient-record.component').then(
+            (m) => m.PatientRecordComponent,
           ),
       },
       {

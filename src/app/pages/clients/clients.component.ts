@@ -52,18 +52,18 @@ export class ClientsComponent {
 
   async deleteClient(id: string) {
     const confirmed = await this.alertService.confirm(
-      '¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.',
-      'Eliminar cliente'
+      '¿Estás seguro de desactivar este registro? Ya no aparecerá en las búsquedas principales ni listas de selección.',
+      'Desactivar cliente'
     );
 
     if (confirmed) {
       this.clientService.deleteClient(id).subscribe({
         next: () => {
-          this.alertService.toast('Cliente eliminado correctamente');
+          this.alertService.toast('Cliente desactivado correctamente');
           this.loadClients();
         },
         error: () => {
-          this.alertService.error('Error al eliminar cliente');
+          this.alertService.error('Error al desactivar cliente');
         },
       });
     }

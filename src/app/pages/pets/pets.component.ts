@@ -9,11 +9,17 @@ import { PetFormComponent } from './components/pet-form/pet-form.component';
 import { Pet } from '../../core/models/pet.interface';
 import { CommonModule } from '@angular/common';
 import { PetVaccinesComponent } from './components/pet-vaccines/pet-vaccines.component';
+import { DailyActivitiesComponent } from './components/daily-activities/daily-activities.component';
 
 @Component({
   selector: 'app-pets',
   standalone: true,
-  imports: [CommonModule, PetListComponent, PetFormComponent, PetVaccinesComponent],
+  imports: [
+    CommonModule,
+    PetListComponent,
+    PetFormComponent,
+    DailyActivitiesComponent,
+  ],
   templateUrl: './pets.component.html',
 })
 export class PetsComponent {
@@ -33,13 +39,13 @@ export class PetsComponent {
     this.refreshTrigger.pipe(
       tap(() => this.isLoading.set(true)),
       switchMap(() => this.petService.getPets()),
-      tap(() => this.isLoading.set(false))
+      tap(() => this.isLoading.set(false)),
     ),
-    { initialValue: [] as Pet[] }
+    { initialValue: [] as Pet[] },
   );
 
   // Lista para el dropdown del formulario
-  clients = toSignal(this.clientService.getClients(), { initialValue: [] });
+  clients = toSignal(this.clientService.findAllActive(), { initialValue: [] });
 
   // Mismos métodos de control que en Clientes
   loadPets() {
@@ -60,18 +66,18 @@ export class PetsComponent {
 
   async deletePet(id: string) {
     const confirmed = await this.alertService.confirm(
-      '¿Estás seguro de que deseas eliminar esta mascota? Esta acción no se puede deshacer.',
-      'Eliminar mascota'
+      '¿Estás seguro de desactivar este registro? Ya no aparecerá en las búsquedas principales ni listas de selección.',
+      'Desactivar mascota',
     );
 
     if (confirmed) {
       this.petService.deletePet(id).subscribe({
         next: () => {
-          this.alertService.toast('Mascota eliminada correctamente');
+          this.alertService.toast('Mascota desactivada correctamente');
           this.loadPets();
         },
         error: () => {
-          this.alertService.error('Error al eliminar mascota');
+          this.alertService.error('Error al desactivar mascota');
         },
       });
     }
@@ -86,7 +92,7 @@ export class PetsComponent {
           this.loadPets();
           this.toggleForm();
         },
-        error: () => this.alertService.error('Error al actualizar la mascota')
+        error: () => this.alertService.error('Error al actualizar la mascota'),
       });
     } else {
       this.petService.createPet(petData).subscribe({
@@ -95,7 +101,7 @@ export class PetsComponent {
           this.loadPets();
           this.toggleForm();
         },
-        error: () => this.alertService.error('Error al registrar la mascota')
+        error: () => this.alertService.error('Error al registrar la mascota'),
       });
     }
   }

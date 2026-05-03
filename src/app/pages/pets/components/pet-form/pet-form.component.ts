@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, input, output } from '@angular/core';
+import { Component, OnInit, inject, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Pet } from '../../../../core/models/pet.interface';
@@ -21,6 +21,25 @@ export class PetFormComponent implements OnInit {
   save = output<Pet>(); // ¡Esto arregla tu error! Le dice a Angular que $event será tipo Pet
   cancelForm = output<void>();
 
+  // --- Computado para incluir dueño inactivo si es necesario ---
+  mergedClients = computed(() => {
+    const active = this.clients();
+    const current = this.pet();
+    
+    if (current?.clientId && current.client) {
+      const exists = active.some(c => c.id === current.clientId);
+      if (!exists) {
+        return [...active, {
+          id: current.clientId,
+          firstName: current.client.firstName,
+          lastName: current.client.lastName + ' (Inactivo)',
+          documentId: current.client.documentId
+        } as Client];
+      }
+    }
+    return active;
+  });
+
   // --- Definición estricta del Formulario (NonNullable) ---
   petForm = this.fb.nonNullable.group({
     id: this.fb.control<string | undefined>(undefined),
@@ -34,7 +53,8 @@ export class PetFormComponent implements OnInit {
     clientId: ['', Validators.required], // El dueño es obligatorio
     medicalNotes: [''],
     dietNotes: [''],
-    generalNotes: ['']
+    generalNotes: [''],
+    isActive: this.fb.control<boolean | undefined>(undefined), // Control para Soft Delete
   });
 
   ngOnInit(): void {
@@ -43,17 +63,22 @@ export class PetFormComponent implements OnInit {
     if (petToEdit) {
       this.petForm.patchValue(petToEdit);
     }
+    // En creación el control isActive se inicializa como undefined y no se muestra en el HTML, por lo que el payload viaja limpio.
   }
 
   onSubmit() {
     if (this.petForm.valid) {
-      // getRawValue() extrae los datos limpios sin casteos inseguros
-      const formValue = this.petForm.getRawValue();
-      
-      // Emitimos el evento 'save', Angular ahora sabrá que esto es tipo 'Pet'
-      this.save.emit(formValue as Pet);
-    } else {
-      this.petForm.markAllAsTouched();
+      // 1. Hacemos una copia exacta de los valores del formulario
+      const payload: any = { ...this.petForm.getRawValue() };
+
+      // 2. Si NO hay ID (es decir, estamos CREANDO un registro nuevo)
+      if (!this.pet()?.id) {
+        // 🔥 Eliminamos por completo la propiedad del objeto antes de enviarla
+        delete payload.isActive;
+      }
+
+      // 3. ¡Despegue!
+      this.save.emit(payload);
     }
   }
 

@@ -16,6 +16,10 @@ export class PetService {
     return this.http.get<Pet[]>(this.apiUrl);
   }
 
+  findAllActive(): Observable<Pet[]> {
+    return this.http.get<Pet[]>(`${this.apiUrl}/active`);
+  }
+
   getPetById(id: string): Observable<Pet> {
     return this.http.get<Pet>(`${this.apiUrl}/${id}`);
   }

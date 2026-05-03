@@ -26,6 +26,7 @@ export class ClientFormComponent {
     email: [''],
     address: [''],
     notes: [''],
+    isActive: this.fb.control<boolean | undefined>(undefined),
   });
 
   constructor() {
@@ -41,10 +42,11 @@ export class ClientFormComponent {
           secondaryPhone: c.secondaryPhone || '',
           email: c.email || '',
           address: c.address || '',
-          notes: c.notes || ''
+          notes: c.notes || '',
+          isActive: c.isActive ?? true
         });
       } else {
-        this.clientForm.reset({ documentType: 'CEDULA' });
+        this.clientForm.reset({ documentType: 'CEDULA', isActive: undefined });
       }
     });
   }
@@ -61,7 +63,8 @@ export class ClientFormComponent {
         secondaryPhone: formValue.secondaryPhone,
         email: formValue.email,
         address: formValue.address,
-        notes: formValue.notes
+        notes: formValue.notes,
+        isActive: formValue.isActive ?? undefined
       };
       
       if (this.client()?.id) {

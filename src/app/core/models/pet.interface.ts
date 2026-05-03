@@ -11,6 +11,7 @@ export interface Pet {
   medicalNotes?: string;
   dietNotes?: string;
   generalNotes?: string;
+  isActive?: boolean;
   
   // Relación obligatoria
   clientId: string; 

@@ -25,6 +25,8 @@ export class VaccineFormComponent implements OnInit {
     nextDoseDate: [''],
     veterinarian: [''],
     notes: [''],
+    weight: [''],
+    dewormingDetails: [''],
   });
 
   ngOnInit() {
@@ -44,6 +46,8 @@ export class VaccineFormComponent implements OnInit {
         nextDoseDate: nextDate,
         veterinarian: currentVaccine.veterinarian || '',
         notes: currentVaccine.notes || '',
+        weight: currentVaccine.weight?.toString() || '',
+        dewormingDetails: currentVaccine.dewormingDetails || '',
       });
     }
   }
@@ -51,17 +55,25 @@ export class VaccineFormComponent implements OnInit {
   onSubmit() {
     if (this.vaccineForm.valid) {
       const formValues = this.vaccineForm.getRawValue();
+
       const payload: any = {
         petId: formValues.petId,
         name: formValues.name,
         applicationDate: formValues.applicationDate,
-      };
 
-      if (formValues.nextDoseDate)
-        payload.nextDoseDate = formValues.nextDoseDate;
-      if (formValues.veterinarian)
-        payload.veterinarian = formValues.veterinarian;
-      if (formValues.notes) payload.notes = formValues.notes;
+        // Para los opcionales: si tienen texto lo enviamos, si están vacíos enviamos null
+        // para obligar a la base de datos a borrar el registro anterior.
+        notes: formValues.notes?.trim() ? formValues.notes : null,
+        veterinarian: formValues.veterinarian?.trim()
+          ? formValues.veterinarian
+          : null,
+        dewormingDetails: formValues.dewormingDetails?.trim()
+          ? formValues.dewormingDetails
+          : null,
+
+        nextDoseDate: formValues.nextDoseDate ? formValues.nextDoseDate : null,
+        weight: formValues.weight ? Number.parseFloat(formValues.weight) : null,
+      };
 
       this.save.emit(payload);
     }

@@ -46,13 +46,15 @@
       }
     </a>
 
-    <a routerLink="/vaccines" (click)="layoutService.closeOnMobile()"
+    <a routerLink="/patient-records" (click)="layoutService.closeOnMobile()"
       routerLinkActive="bg-wp-robin/10 text-wp-robin border-l-4 border-wp-robin opacity-100"
       class="flex items-center py-3 rounded-r-lg border-l-4 border-transparent text-white opacity-60 hover:opacity-100 hover:bg-white/5 transition-all font-medium cursor-pointer overflow-hidden whitespace-nowrap"
       [class.px-6]="!layoutService.isCollapsed" [class.justify-center]="layoutService.isCollapsed">
-      <span class="material-icons shrink-0" translate="no">vaccines</span>
+      <span class="material-symbols-outlined" translate="no">
+        smb_share
+      </span>
       @if (!layoutService.isCollapsed) {
-      <span class="ml-4">Carnets Médicos</span>
+      <span class="ml-4">Expedientes</span>
       }
     </a>
 
